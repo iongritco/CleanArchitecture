@@ -2,8 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs
-/ToDoApp/.vs/ToDoApp/v16
-/ToDoApp/ToDoApp.Client/obj
-/ToDoApp/ToDoApp.Server/obj
-/ToDoApp/ToDoApp.Shared/obj
+**/.vs/**
+
+**/bin/**
+**/obj/**

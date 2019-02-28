@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ToDoApp.Shared\ToDoApp.Shared.csproj" />
+    <ProjectReference Include="..\ToDoApp.Shared\ToDoApp.Domain.csproj" />
   </ItemGroup>
 
 </Project>
