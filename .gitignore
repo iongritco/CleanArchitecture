@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+/ToDoApp/.vs/ToDoApp/v16
+/ToDoApp/ToDoApp.Client/obj
+/ToDoApp/ToDoApp.Server/obj
+/ToDoApp/ToDoApp.Shared/obj
