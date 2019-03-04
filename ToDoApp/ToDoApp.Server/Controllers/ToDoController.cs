@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using ToDo.Application.ToDo.Commands;
-using ToDo.Application.ToDo.Queries;
+using ToDoApp.Application.ToDo.Commands;
+using ToDoApp.Application.ToDo.Queries;
 
 namespace ToDoApp.Server.Controllers
 {

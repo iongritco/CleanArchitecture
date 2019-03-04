@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ToDo.Application.ToDo.Queries
+namespace ToDoApp.Application.ToDo.Queries
 {
     public class GetToDoListQueryHandler : IRequestHandler<GetToDoListQuery, ToDoListViewModel>
     {

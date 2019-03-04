@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ToDo.Application.ToDo.Queries
+namespace ToDoApp.Application.ToDo.Queries
 {
     public class ToDoListViewModel
     {

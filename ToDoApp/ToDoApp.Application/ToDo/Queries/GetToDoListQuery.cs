@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ToDo.Application.ToDo.Queries
+namespace ToDoApp.Application.ToDo.Queries
 {
     public class GetToDoListQuery : IRequest<ToDoListViewModel>
     {

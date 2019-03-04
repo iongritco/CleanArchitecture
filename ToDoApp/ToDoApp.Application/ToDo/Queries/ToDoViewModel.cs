@@ -1,6 +1,6 @@
 ﻿using ToDoApp.Domain.Entities;
 
-namespace ToDo.Application.ToDo.Queries
+namespace ToDoApp.Application.ToDo.Queries
 {
     public class ToDoViewModel
     {

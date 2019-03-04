@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using ToDo.Application.ToDo.Queries;
+using ToDoApp.Application.ToDo.Queries;
 
 namespace ToDoApp.Server
 {

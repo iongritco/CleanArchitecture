@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 
-namespace ToDo.Application.ToDo.Commands
+namespace ToDoApp.Application.ToDo.Commands
 {
     public class CreateToDoCommandHandler : IRequestHandler<CreateToDoCommand>
     {

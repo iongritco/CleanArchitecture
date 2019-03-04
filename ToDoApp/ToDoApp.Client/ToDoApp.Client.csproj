@@ -11,8 +11,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.8.0-preview-19104-04" PrivateAssets="all" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ToDoApp.Shared\ToDoApp.Domain.csproj" />
-  </ItemGroup>
-
 </Project>
