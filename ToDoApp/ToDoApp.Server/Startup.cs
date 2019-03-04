@@ -1,6 +1,9 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using ToDo.Application.ToDo.Queries;
 
 namespace ToDoApp.Server
 {
@@ -12,6 +15,7 @@ namespace ToDoApp.Server
         {
             services.AddMvc().AddNewtonsoftJson();
             services.AddResponseCompression();
+            services.AddMediatR(typeof(GetToDoListQuery).GetTypeInfo().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,7 +30,7 @@ namespace ToDoApp.Server
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
+                routes.MapRoute(name: "default", template: "api/{controller}/{action}/{id?}");
             });
 
             app.UseBlazor<Client.Startup>();
