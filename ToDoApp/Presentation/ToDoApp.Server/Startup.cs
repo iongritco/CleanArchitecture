@@ -1,9 +1,14 @@
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using ToDoApp.Repository;
+using ToDoApp.Application.Interfaces;
 using ToDoApp.Application.ToDo.Queries;
+using ToDoApp.Repository;
+using ToDoApp.Repository.Tasks;
 
 namespace ToDoApp.Server
 {
@@ -15,6 +20,10 @@ namespace ToDoApp.Server
         {
             services.AddMvc().AddNewtonsoftJson();
             services.AddResponseCompression();
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
+            services.AddTransient<IToDoRepository, ToDoRepository>();
+
             services.AddMediatR(typeof(GetToDoListQuery).GetTypeInfo().Assembly);
         }
 

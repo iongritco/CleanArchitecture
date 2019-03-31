@@ -1,4 +1,4 @@
-﻿using ToDoApp.Domain.Entities;
+﻿using ToDoApp.Entity.Enums;
 
 namespace ToDoApp.Application.ToDo.Queries
 {

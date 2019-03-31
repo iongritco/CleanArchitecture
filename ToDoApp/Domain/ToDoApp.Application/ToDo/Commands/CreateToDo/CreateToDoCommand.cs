@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ToDoApp.Application.ToDo.Commands
+namespace ToDoApp.Application.ToDo.Commands.CreateTask
 {
     public class CreateToDoCommand : IRequest
     {

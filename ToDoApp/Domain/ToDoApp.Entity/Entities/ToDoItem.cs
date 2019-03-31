@@ -1,8 +1,9 @@
 ﻿using System;
+using ToDoApp.Entity.Enums;
 
-namespace ToDoApp.Domain.Entities
+namespace ToDoApp.Entity.Entities
 {
-    public class ToDo
+    public class ToDoItem
     {
         public int Id { get; set; }
         public string Description { get; set; }

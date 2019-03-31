@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using ToDoApp.Application.ToDo.Commands;
+using ToDoApp.Application.ToDo.Commands.CreateTask;
 using ToDoApp.Application.ToDo.Queries;
 
 namespace ToDoApp.Server.Controllers
@@ -10,22 +10,22 @@ namespace ToDoApp.Server.Controllers
     {
         public ToDoController(IMediator mediator)
         {
-            Mediator = mediator;
+            this.mediator = mediator;
         }
 
-        public IMediator Mediator { get; }
+        private readonly IMediator mediator;
 
         [HttpPost]
-        public async Task<IActionResult> CreateToDo(CreateToDoCommand command)
+        public async Task<IActionResult> CreateToDo([FromBody]CreateToDoCommand command)
         {
-            await Mediator.Send(command);
+            await mediator.Send(command);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetToDoList(GetToDoListQuery query)
+        public async Task<IActionResult> GetToDoList()
         {
-            var result = await Mediator.Send(query);
+            var result = await mediator.Send(new GetToDoListQuery());
             return Ok(result);
         }
     }
