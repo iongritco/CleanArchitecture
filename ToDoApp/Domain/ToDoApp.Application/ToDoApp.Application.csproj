@@ -9,11 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ToDo\Commands\DeleteToDo\" />
-    <Folder Include="ToDo\Commands\UpdateToDo\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ToDoApp.Entity\ToDoApp.Entity.csproj" />
   </ItemGroup>
 

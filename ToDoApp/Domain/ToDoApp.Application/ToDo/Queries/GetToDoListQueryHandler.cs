@@ -21,7 +21,7 @@ namespace ToDoApp.Application.ToDo.Queries
             var result = new ToDoListViewModel();
             foreach (var item in toDoList)
             {
-                result.ToDoList.Add(new ToDoViewModel { Description = item.Description });
+                result.ToDoList.Add(new ToDoViewModel { Id = item.Id, Status = item.Status, Description = item.Description });
             }
 
             return Task.FromResult(result);

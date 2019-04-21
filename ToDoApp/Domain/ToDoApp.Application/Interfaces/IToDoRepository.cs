@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ToDoApp.Entity.Entities;
 
 namespace ToDoApp.Application.Interfaces
@@ -8,5 +9,9 @@ namespace ToDoApp.Application.Interfaces
         void CreateToDo(ToDoItem toDo);
 
         IEnumerable<ToDoItem> GetToDoList();
+
+        void UpdateToDo(ToDoItem toDo);
+
+        ToDoItem GetToDo(Guid id);
     }
 }

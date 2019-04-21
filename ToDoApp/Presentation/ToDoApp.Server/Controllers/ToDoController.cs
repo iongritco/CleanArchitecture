@@ -2,18 +2,27 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ToDoApp.Application.ToDo.Commands.CreateTask;
+using ToDoApp.Application.ToDo.Commands.DeleteToDo;
+using ToDoApp.Application.ToDo.Commands.UpdateToDo;
 using ToDoApp.Application.ToDo.Queries;
 
 namespace ToDoApp.Server.Controllers
 {
     public class ToDoController : ControllerBase
     {
+        private readonly IMediator mediator;
+
         public ToDoController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        private readonly IMediator mediator;
+        [HttpGet]
+        public async Task<IActionResult> GetToDoList()
+        {
+            var result = await mediator.Send(new GetToDoListQuery());
+            return Ok(result);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateToDo([FromBody]CreateToDoCommand command)
@@ -22,10 +31,17 @@ namespace ToDoApp.Server.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetToDoList()
+        [HttpPut]
+        public async Task<IActionResult> UpdateToDo([FromBody]UpdateToDoCommand command)
         {
-            var result = await mediator.Send(new GetToDoListQuery());
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteToDo([FromBody]DeleteToDoCommand command)
+        {
+            var result = await mediator.Send(command);
             return Ok(result);
         }
     }

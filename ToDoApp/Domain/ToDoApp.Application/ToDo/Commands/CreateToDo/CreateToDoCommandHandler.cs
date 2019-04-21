@@ -17,7 +17,8 @@ namespace ToDoApp.Application.ToDo.Commands.CreateTask
 
         public Task<Unit> Handle(CreateToDoCommand request, CancellationToken cancellationToken)
         {
-            todoRepository.CreateToDo(new ToDoItem { Description = request.Description });
+            var toDo = new ToDoItem(request.Description);
+            todoRepository.CreateToDo(toDo);
             return Unit.Task;
         }
     }
