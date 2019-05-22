@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using ToDoApp.Entity.Enums;
 
 namespace ToDoApp.Entity.Entities
@@ -13,9 +14,10 @@ namespace ToDoApp.Entity.Entities
             SetDescription(description);
         }
 
-        public Guid Id { get; }
+        [Key]
+        public Guid Id { get; private set; }
         public string Description { get; private set; }
-        public DateTime CreatedDate { get; }
+        public DateTime CreatedDate { get; private set; }
         public DateTime? CompletedDate { get; private set; }
         public Status Status { get; private set; }
 

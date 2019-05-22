@@ -15,12 +15,14 @@ namespace ToDoApp.Application.ToDo.Commands.DeleteToDo
             this.toDoRepository = toDoRepository;
         }
 
-        public Task<Unit> Handle(DeleteToDoCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteToDoCommand request, CancellationToken cancellationToken)
         {
-            var toDo = this.toDoRepository.GetToDo(request.Id);
+            var toDo = await this.toDoRepository.GetToDo(request.Id);
             toDo.SetStatus(Status.Deleted);
-            this.toDoRepository.UpdateToDo(toDo);
-            return Unit.Task;
+
+            await this.toDoRepository.UpdateToDo(toDo);
+
+            return Unit.Value;
         }
     }
 }

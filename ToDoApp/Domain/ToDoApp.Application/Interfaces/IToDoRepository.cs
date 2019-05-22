@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ToDoApp.Entity.Entities;
 
 namespace ToDoApp.Application.Interfaces
 {
     public interface IToDoRepository
     {
-        void CreateToDo(ToDoItem toDo);
+        Task CreateToDo(ToDoItem toDo);
 
-        IEnumerable<ToDoItem> GetToDoList();
+        Task<IEnumerable<ToDoItem>> GetToDoList();
 
-        void UpdateToDo(ToDoItem toDo);
+        Task UpdateToDo(ToDoItem toDo);
 
-        ToDoItem GetToDo(Guid id);
+        Task<ToDoItem> GetToDo(Guid id);
     }
 }

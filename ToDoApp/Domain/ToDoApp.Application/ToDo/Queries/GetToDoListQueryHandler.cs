@@ -15,16 +15,16 @@ namespace ToDoApp.Application.ToDo.Queries
             this.toDoRepository = toDoRepository;
         }
 
-        public Task<ToDoListViewModel> Handle(GetToDoListQuery request, CancellationToken cancellationToken)
+        public async Task<ToDoListViewModel> Handle(GetToDoListQuery request, CancellationToken cancellationToken)
         {
-            var toDoList = this.toDoRepository.GetToDoList();
+            var toDoList = await this.toDoRepository.GetToDoList();
             var result = new ToDoListViewModel();
             foreach (var item in toDoList)
             {
                 result.ToDoList.Add(new ToDoViewModel { Id = item.Id, Status = item.Status, Description = item.Description });
             }
 
-            return Task.FromResult(result);
+            return result;
         }
     }
 }

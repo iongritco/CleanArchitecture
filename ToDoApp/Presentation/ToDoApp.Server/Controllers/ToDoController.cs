@@ -8,6 +8,8 @@ using ToDoApp.Application.ToDo.Queries;
 
 namespace ToDoApp.Server.Controllers
 {
+    [Route("api/todo")]
+    [ApiController]
     public class ToDoController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -25,21 +27,21 @@ namespace ToDoApp.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateToDo([FromBody]CreateToDoCommand command)
+        public async Task<IActionResult> CreateToDo(CreateToDoCommand command)
         {
             await mediator.Send(command);
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateToDo([FromBody]UpdateToDoCommand command)
+        public async Task<IActionResult> UpdateToDo(UpdateToDoCommand command)
         {
             var result = await mediator.Send(command);
             return Ok(result);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteToDo([FromBody]DeleteToDoCommand command)
+        public async Task<IActionResult> DeleteToDo(DeleteToDoCommand command)
         {
             var result = await mediator.Send(command);
             return Ok(result);

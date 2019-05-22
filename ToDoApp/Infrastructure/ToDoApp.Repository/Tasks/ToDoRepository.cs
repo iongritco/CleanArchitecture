@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Entity.Entities;
 
@@ -8,30 +10,33 @@ namespace ToDoApp.Repository.Tasks
 {
     public class ToDoRepository : IToDoRepository
     {
-        // temporary storage list
-        private static List<ToDoItem> data = new List<ToDoItem>();
-
-        public void CreateToDo(ToDoItem toDo)
+        public ToDoRepository(ToDoDataContext toDoDataContext)
         {
-            // add here the database logic
-            data.Add(toDo);
+            this.toDoDataContext = toDoDataContext;
+        }
+        
+        private readonly ToDoDataContext toDoDataContext;
+
+        public async Task CreateToDo(ToDoItem toDo)
+        {
+            toDoDataContext.Add(toDo);
+            await toDoDataContext.SaveChangesAsync();
         }
 
-        public ToDoItem GetToDo(Guid id)
+        public async Task<ToDoItem> GetToDo(Guid id)
         {
-            // add here the database logic
-            return data.Where(x=>x.Id.Equals(id)).FirstOrDefault();
+            return await toDoDataContext.ToDoItems.Where(x=>x.Id.Equals(id)).SingleOrDefaultAsync();
         }
 
-        public IEnumerable<ToDoItem> GetToDoList()
+        public async Task<IEnumerable<ToDoItem>> GetToDoList()
         {
-            // add here the database logic
-            return data;
+            return await toDoDataContext.ToDoItems.ToListAsync();
         }
 
-        public void UpdateToDo(ToDoItem toDo)
+        public async Task UpdateToDo(ToDoItem toDo)
         {
-            // add here the database logic
+            toDoDataContext.Update(toDo);
+            await toDoDataContext.SaveChangesAsync();
         }
     }
 }

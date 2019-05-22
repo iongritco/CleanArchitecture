@@ -14,13 +14,15 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
             this.toDoRepository = toDoRepository;
         }
 
-        public Task<Unit> Handle(UpdateToDoCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateToDoCommand request, CancellationToken cancellationToken)
         {
-            var toDo = this.toDoRepository.GetToDo(request.Id);
+            var toDo = await this.toDoRepository.GetToDo(request.Id);
             toDo.SetDescription(request.Description);
             toDo.SetStatus(request.Status);
-            this.toDoRepository.UpdateToDo(toDo);
-            return Unit.Task;
+
+            await this.toDoRepository.UpdateToDo(toDo);
+
+            return Unit.Value;
         }
     }
 }
