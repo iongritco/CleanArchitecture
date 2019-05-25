@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Entity.Entities;
+using ToDoApp.Entity.Enums;
 
 namespace ToDoApp.Application.ToDo.Queries
 {
@@ -20,7 +21,7 @@ namespace ToDoApp.Application.ToDo.Queries
         public async Task<List<ToDoItem>> Handle(GetToDoListQuery request, CancellationToken cancellationToken)
         {
             var toDoList = await this.toDoRepository.GetToDoList();
-            return toDoList.ToList();
+            return toDoList.Where(x => x.Status != Status.Deleted).ToList();
         }
     }
 }

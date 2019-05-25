@@ -6,6 +6,7 @@ namespace ToDoApp.Entity.Entities
 {
     public class ToDoItem
     {
+        // Public parameterless constructor is needed just for the serialization
         public ToDoItem()
         {
         }
