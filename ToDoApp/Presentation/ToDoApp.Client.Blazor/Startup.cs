@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ToDoApp.Client
+namespace ToDoApp.Client.Blazor
 {
     public class Startup
     {

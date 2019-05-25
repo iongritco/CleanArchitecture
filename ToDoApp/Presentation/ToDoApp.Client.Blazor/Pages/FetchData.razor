@@ -1,0 +1,43 @@
+﻿@page "/fetchData"
+@inject HttpClient Http
+@using ToDoApp.Entity.Entities
+
+<h1>ToDo list</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (toDoList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Created date</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var toDo in toDoList)
+            {
+            <tr>
+                <td>@toDo.CreatedDate.ToShortDateString()</td>
+                <td>@toDo.Description</td>
+                <td>@toDo.Status.ToString()</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+    ToDoItem[] toDoList;
+
+    protected override async Task OnInitAsync()
+    {
+        toDoList = await Http.GetJsonAsync<ToDoItem[]>("api/todo");
+    }
+}

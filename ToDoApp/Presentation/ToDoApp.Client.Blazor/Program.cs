@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Hosting;
 
-namespace ToDoApp.Client
+namespace ToDoApp.Client.Blazor
 {
     public class Program
     {

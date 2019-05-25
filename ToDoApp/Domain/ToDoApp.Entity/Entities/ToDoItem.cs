@@ -6,6 +6,10 @@ namespace ToDoApp.Entity.Entities
 {
     public class ToDoItem
     {
+        public ToDoItem()
+        {
+        }
+
         public ToDoItem(string description)
         {
             Id = Guid.NewGuid();
