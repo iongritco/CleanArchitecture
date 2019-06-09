@@ -20,7 +20,7 @@ namespace ToDoApp.Application.ToDo.Queries
 
         public async Task<List<ToDoItem>> Handle(GetToDoListQuery request, CancellationToken cancellationToken)
         {
-            var toDoList = await this.toDoRepository.GetToDoList();
+            var toDoList = await this.toDoRepository.GetToDoList(request.Username);
             return toDoList.Where(x => x.Status != Status.Deleted).ToList();
         }
     }

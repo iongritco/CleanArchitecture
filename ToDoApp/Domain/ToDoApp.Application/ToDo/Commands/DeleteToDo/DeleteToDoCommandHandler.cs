@@ -17,7 +17,7 @@ namespace ToDoApp.Application.ToDo.Commands.DeleteToDo
 
         public async Task<Unit> Handle(DeleteToDoCommand request, CancellationToken cancellationToken)
         {
-            var toDo = await this.toDoRepository.GetToDo(request.Id);
+            var toDo = await this.toDoRepository.GetToDo(request.Id, request.Username);
             toDo.SetStatus(Status.Deleted);
 
             await this.toDoRepository.UpdateToDo(toDo);

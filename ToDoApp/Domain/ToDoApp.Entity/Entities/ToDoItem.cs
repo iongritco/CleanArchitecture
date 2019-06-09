@@ -6,17 +6,23 @@ namespace ToDoApp.Entity.Entities
 {
     public class ToDoItem
     {
-        // Public parameterless constructor is needed just for the serialization
-        public ToDoItem()
+        public ToDoItem(string description)
+            : this(description, string.Empty)
         {
         }
 
-        public ToDoItem(string description)
+        public ToDoItem(string description, string username)
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTime.UtcNow;
             Status = Status.ToDo;
             SetDescription(description);
+            SetUsername(username);
+        }
+
+        // Private parameterless constructor is needed just for the serialization
+        private ToDoItem()
+        {
         }
 
         [Key]
@@ -25,6 +31,7 @@ namespace ToDoApp.Entity.Entities
         public DateTime CreatedDate { get; private set; }
         public DateTime? CompletedDate { get; private set; }
         public Status Status { get; private set; }
+        public string Username { get; set; }
 
         public void SetDescription(string description)
         {
@@ -34,6 +41,16 @@ namespace ToDoApp.Entity.Entities
             }
 
             Description = description;
+        }
+
+        public void SetUsername(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+
+            Username = username;
         }
 
         public void SetStatus(Status status)

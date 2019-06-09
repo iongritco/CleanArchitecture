@@ -9,10 +9,10 @@ namespace ToDoApp.Application.Interfaces
     {
         Task CreateToDo(ToDoItem toDo);
 
-        Task<IEnumerable<ToDoItem>> GetToDoList();
+        Task<IEnumerable<ToDoItem>> GetToDoList(string username);
 
         Task UpdateToDo(ToDoItem toDo);
 
-        Task<ToDoItem> GetToDo(Guid id);
+        Task<ToDoItem> GetToDo(Guid id, string username);
     }
 }

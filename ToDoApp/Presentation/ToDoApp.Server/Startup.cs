@@ -8,10 +8,18 @@ using ToDoApp.Repository;
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Application.ToDo.Queries;
 using ToDoApp.Repository;
-using ToDoApp.Repository.Tasks;
+using ToDoApp.Repository.ToDo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using ToDoApp.Identity.User;
+using ToDoApp.Identity.JwtToken;
+using ToDoApp.Server.Services;
 
 namespace ToDoApp.Server
 {
@@ -29,13 +37,35 @@ namespace ToDoApp.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddNewtonsoftJson();
+
             services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ToDoDataConnection")));
             services.AddResponseCompression();
 
+            services.AddSingleton<ISettings, Settings>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             services.AddTransient<IToDoRepository, ToDoRepository>();
+            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<ITokenService, JwtTokenService>();
 
             services.AddMediatR(typeof(GetToDoListQuery).GetTypeInfo().Assembly);
+
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>().AddEntityFrameworkStores<ToDoDataContext>().AddDefaultTokenProviders();
+            services.AddAuthentication(options =>
+                    {
+                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                    .AddJwtBearer(options =>
+                    {
+                        var signingKey = Convert.FromBase64String(Configuration["JwtSecret"]);
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = false,
+                            ValidateAudience = false,
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(signingKey)
+                        };
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +80,9 @@ namespace ToDoApp.Server
             }
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

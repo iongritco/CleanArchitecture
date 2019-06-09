@@ -11,5 +11,7 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
         public string Description { get; set; }
 
         public Status Status { get; set; }
+
+        public string Username { get; set; }
     }
 }

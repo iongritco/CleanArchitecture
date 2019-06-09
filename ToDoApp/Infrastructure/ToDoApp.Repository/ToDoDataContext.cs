@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System;
 using ToDoApp.Entity.Entities;
+using ToDoApp.Identity.User;
 
 namespace ToDoApp.Repository
 {
-    public class ToDoDataContext : DbContext
+    public class ToDoDataContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public ToDoDataContext(DbContextOptions<ToDoDataContext> options)
             : base(options)
@@ -11,14 +15,5 @@ namespace ToDoApp.Repository
         }
 
         public DbSet<ToDoItem> ToDoItems { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ToDoItem>().HasData(
-                new ToDoItem("Do it!"),
-                new ToDoItem("Finish project"),
-                new ToDoItem("Go to work!"));
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }

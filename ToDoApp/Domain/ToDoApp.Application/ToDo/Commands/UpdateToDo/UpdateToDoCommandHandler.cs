@@ -16,7 +16,7 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
 
         public async Task<Unit> Handle(UpdateToDoCommand request, CancellationToken cancellationToken)
         {
-            var toDo = await this.toDoRepository.GetToDo(request.Id);
+            var toDo = await this.toDoRepository.GetToDo(request.Id, request.Username);
             toDo.SetDescription(request.Description);
             toDo.SetStatus(request.Status);
 

@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using ToDoApp.Application.ToDo.Commands.CreateTask;
 using ToDoApp.Application.ToDo.Commands.DeleteToDo;
@@ -10,6 +12,7 @@ namespace ToDoApp.Server.Controllers
 {
     [Route("api/todo")]
     [ApiController]
+    [Authorize]
     public class ToDoController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -22,13 +25,14 @@ namespace ToDoApp.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetToDoList()
         {
-            var result = await mediator.Send(new GetToDoListQuery());
+            var result = await mediator.Send(new GetToDoListQuery(User.Identity.Name));
             return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateToDo(CreateToDoCommand command)
         {
+            command.Username = User.Identity.Name;
             await mediator.Send(command);
             return Ok();
         }
@@ -36,6 +40,7 @@ namespace ToDoApp.Server.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateToDo(UpdateToDoCommand command)
         {
+            command.Username = User.Identity.Name;
             var result = await mediator.Send(command);
             return Ok(result);
         }
@@ -43,6 +48,7 @@ namespace ToDoApp.Server.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteToDo(DeleteToDoCommand command)
         {
+            command.Username = User.Identity.Name;
             var result = await mediator.Send(command);
             return Ok(result);
         }

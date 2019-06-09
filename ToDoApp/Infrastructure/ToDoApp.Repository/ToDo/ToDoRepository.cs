@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Entity.Entities;
 
-namespace ToDoApp.Repository.Tasks
+namespace ToDoApp.Repository.ToDo
 {
     public class ToDoRepository : IToDoRepository
     {
@@ -23,14 +23,14 @@ namespace ToDoApp.Repository.Tasks
             await toDoDataContext.SaveChangesAsync();
         }
 
-        public async Task<ToDoItem> GetToDo(Guid id)
+        public async Task<ToDoItem> GetToDo(Guid id, string username)
         {
-            return await toDoDataContext.ToDoItems.Where(x=>x.Id.Equals(id)).SingleOrDefaultAsync();
+            return await toDoDataContext.ToDoItems.Where(x=>x.Id.Equals(id) && x.Username.Equals(username)).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ToDoItem>> GetToDoList()
+        public async Task<IEnumerable<ToDoItem>> GetToDoList(string username)
         {
-            return await toDoDataContext.ToDoItems.ToListAsync();
+            return await toDoDataContext.ToDoItems.Where(x=>x.Username.Equals(username)).ToListAsync();
         }
 
         public async Task UpdateToDo(ToDoItem toDo)
