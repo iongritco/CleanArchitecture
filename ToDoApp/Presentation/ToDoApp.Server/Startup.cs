@@ -20,6 +20,8 @@ using Microsoft.IdentityModel.Tokens;
 using ToDoApp.Identity.User;
 using ToDoApp.Identity.JwtToken;
 using ToDoApp.Server.Services;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.Linq;
 
 namespace ToDoApp.Server
 {
@@ -39,7 +41,11 @@ namespace ToDoApp.Server
             services.AddMvc().AddNewtonsoftJson();
 
             services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ToDoDataConnection")));
-            services.AddResponseCompression();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
 
             services.AddSingleton<ISettings, Settings>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
@@ -80,6 +86,7 @@ namespace ToDoApp.Server
                 app.UseBlazorDebugging();
             }
 
+            app.UseClientSideBlazorFiles<ToDoApp.Client.Blazor.Startup>();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -87,9 +94,8 @@ namespace ToDoApp.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapFallbackToClientSideBlazor<ToDoApp.Client.Blazor.Startup>("index.html");
             });
-
-            app.UseBlazor<ToDoApp.Client.Blazor.Startup>();
         }
     }
 }
