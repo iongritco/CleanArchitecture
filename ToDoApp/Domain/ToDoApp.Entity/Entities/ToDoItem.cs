@@ -21,16 +21,16 @@ namespace ToDoApp.Entity.Entities
         }
 
         // Private parameterless constructor is needed just for the serialization
-        private ToDoItem()
+        public ToDoItem()
         {
         }
 
         [Key]
-        public Guid Id { get; private set; }
-        public string Description { get; private set; }
-        public DateTime CreatedDate { get; private set; }
-        public DateTime? CompletedDate { get; private set; }
-        public Status Status { get; private set; }
+        public Guid Id { get; set; }
+        public string Description { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? CompletedDate { get; set; }
+        public Status Status { get; set; }
         public string Username { get; set; }
 
         public void SetDescription(string description)
