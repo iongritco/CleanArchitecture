@@ -5,13 +5,9 @@ using ToDoApp.Entity.Entities;
 
 namespace ToDoApp.Application.Interfaces
 {
-    public interface IToDoRepository
+    public interface IToDoQueryRepository
     {
-        Task CreateToDo(ToDoItem toDo);
-
         Task<IEnumerable<ToDoItem>> GetToDoList(string username);
-
-        Task UpdateToDo(ToDoItem toDo);
 
         Task<ToDoItem> GetToDo(Guid id, string username);
     }

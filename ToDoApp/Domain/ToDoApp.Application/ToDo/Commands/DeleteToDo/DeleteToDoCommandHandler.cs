@@ -8,19 +8,21 @@ namespace ToDoApp.Application.ToDo.Commands.DeleteToDo
 {
     public class DeleteToDoCommandHandler : IRequestHandler<DeleteToDoCommand>
     {
-        private readonly IToDoRepository toDoRepository;
+        private readonly IToDoCommandRepository commandRepository;
+        private readonly IToDoQueryRepository queryRepository;
 
-        public DeleteToDoCommandHandler(IToDoRepository toDoRepository)
+        public DeleteToDoCommandHandler(IToDoCommandRepository commandRepository, IToDoQueryRepository queryRepository)
         {
-            this.toDoRepository = toDoRepository;
+            this.commandRepository = commandRepository;
+            this.queryRepository = queryRepository;
         }
 
         public async Task<Unit> Handle(DeleteToDoCommand request, CancellationToken cancellationToken)
         {
-            var toDo = await this.toDoRepository.GetToDo(request.Id, request.Username);
+            var toDo = await this.queryRepository.GetToDo(request.Id, request.Username);
             toDo.SetStatus(Status.Deleted);
 
-            await this.toDoRepository.UpdateToDo(toDo);
+            await this.commandRepository.UpdateToDo(toDo);
 
             return Unit.Value;
         }

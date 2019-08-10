@@ -8,17 +8,17 @@ namespace ToDoApp.Application.ToDo.Commands.CreateTask
 {
     public class CreateToDoCommandHandler : IRequestHandler<CreateToDoCommand>
     {
-        public CreateToDoCommandHandler(IToDoRepository todoRepository)
+        public CreateToDoCommandHandler(IToDoCommandRepository commandRepository)
         {
-            this.todoRepository = todoRepository;
+            this.commandRepository = commandRepository;
         }
 
-        private readonly IToDoRepository todoRepository;
+        private readonly IToDoCommandRepository commandRepository;
 
         public async Task<Unit> Handle(CreateToDoCommand request, CancellationToken cancellationToken)
         {
             var toDo = new ToDoItem(request.Description, request.Username);
-            await todoRepository.CreateToDo(toDo);
+            await commandRepository.CreateToDo(toDo);
 
             return Unit.Value;
         }

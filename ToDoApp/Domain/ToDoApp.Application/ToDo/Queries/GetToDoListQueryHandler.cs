@@ -11,16 +11,16 @@ namespace ToDoApp.Application.ToDo.Queries
 {
     public class GetTaskListQueryHandler : IRequestHandler<GetToDoListQuery, List<ToDoItem>>
     {
-        private readonly IToDoRepository toDoRepository;
+        private readonly IToDoQueryRepository queryRepository;
 
-        public GetTaskListQueryHandler(IToDoRepository toDoRepository)
+        public GetTaskListQueryHandler(IToDoQueryRepository toDoRepository)
         {
-            this.toDoRepository = toDoRepository;
+            this.queryRepository = toDoRepository;
         }
 
         public async Task<List<ToDoItem>> Handle(GetToDoListQuery request, CancellationToken cancellationToken)
         {
-            var toDoList = await this.toDoRepository.GetToDoList(request.Username);
+            var toDoList = await this.queryRepository.GetToDoList(request.Username);
             return toDoList.Where(x => x.Status != Status.Deleted).ToList();
         }
     }

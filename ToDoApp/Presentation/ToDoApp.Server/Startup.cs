@@ -43,7 +43,8 @@ namespace ToDoApp.Server
 
             services.AddSingleton<ISettings, Settings>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
-            services.AddTransient<IToDoRepository, ToDoRepository>();
+            services.AddTransient<IToDoCommandRepository, ToDoCommandRepository>();
+            services.AddTransient<IToDoQueryRepository, ToDoQueryRepository>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ITokenService, JwtTokenService>();
 
