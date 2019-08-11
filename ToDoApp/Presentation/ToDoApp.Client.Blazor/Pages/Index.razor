@@ -1,5 +1,20 @@
 ﻿@page "/"
+@inject IUriHelper UriHelper
 
 <h1>Hello!</h1>
 
 Welcome to the To Do App.
+
+@code {
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+    protected override async Task OnInitAsync()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            UriHelper.NavigateTo("/login");
+        }
+    }
+}

@@ -20,12 +20,12 @@ namespace ToDoApp.Repository.ToDo
 
         public async Task<ToDoItem> GetToDo(Guid id, string username)
         {
-            return await toDoDataContext.ToDoItems.Where(x=>x.Id.Equals(id) && x.Username.Equals(username)).AsNoTracking().SingleOrDefaultAsync();
+            return await toDoDataContext.ToDoItems.Where(x=>x.Id.Equals(id) && x.Username.Equals(username)).SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<ToDoItem>> GetToDoList(string username)
         {
-            return await toDoDataContext.ToDoItems.Where(x=>x.Username.Equals(username)).AsNoTracking().ToListAsync();
+            return await toDoDataContext.ToDoItems.Where(x=>x.Username.Equals(username)).ToListAsync();
         }
     }
 }

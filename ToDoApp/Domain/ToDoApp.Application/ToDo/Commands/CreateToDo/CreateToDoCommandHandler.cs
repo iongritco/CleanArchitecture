@@ -17,7 +17,7 @@ namespace ToDoApp.Application.ToDo.Commands.CreateTask
 
         public async Task<Unit> Handle(CreateToDoCommand request, CancellationToken cancellationToken)
         {
-            var toDo = new ToDoItem(request.Description, request.Username);
+            var toDo = new ToDoItem(request.Id, request.Description, request.Username);
             await commandRepository.CreateToDo(toDo);
 
             return Unit.Value;

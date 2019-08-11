@@ -6,14 +6,14 @@ namespace ToDoApp.Entity.Entities
 {
     public class ToDoItem
     {
-        public ToDoItem(string description)
-            : this(description, string.Empty)
+        public ToDoItem(string description, string username)
+            : this(Guid.NewGuid(), description, username)
         {
         }
 
-        public ToDoItem(string description, string username)
+        public ToDoItem(Guid id, string description, string username)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             CreatedDate = DateTime.UtcNow;
             Status = Status.ToDo;
             SetDescription(description);

@@ -1,11 +1,12 @@
 ﻿@page "/todo"
 @inject HttpClient Http
+@inject IUriHelper UriHelper
 @using ToDoApp.Entity.Entities
 @using ToDoApp.Entity.Enums
 
 <h1>To Do</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>To Do list.</p>
 
 @if (toDoList == null)
 {
@@ -49,28 +50,35 @@ else
 }
 
 @code {
-        List<ToDoItem> toDoList;
+    List<ToDoItem> toDoList;
     private string newItem;
-    // TODO This is just a temporary solution to use authorization - remove when implementing blazor authentication
-    private string authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Imlvbi5ncml0Y29Ac29mdHZpc2lvbi5jb20iLCJuYmYiOjE1NjU0MjY3MjIsImV4cCI6MTU2NTUxMzEyMiwiaWF0IjoxNTY1NDI2NzIyfQ.AkI67jUkRguXt5YS_j3rgbKQ0kto3qIYLeeOwHEbAcc";
-    private string user = "ion.gritco@gmail.com";
+    private string currentUser;
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+
 
     protected override async Task OnInitAsync()
     {
-        if(!Http.DefaultRequestHeaders.Contains("Authorization"))
-        {
-            Http.DefaultRequestHeaders.Add("Authorization", $"Bearer {authToken}");
-        }
+        var authState = await authenticationStateTask;
+        var user = authState.User;
 
-        toDoList = await Http.GetJsonAsync<List<ToDoItem>>("api/todo");
+        if (user.Identity.IsAuthenticated)
+        {
+            currentUser = user.Identity.Name;
+            toDoList = await Http.GetJsonAsync<List<ToDoItem>>("api/todo");
+        }
+        else
+        {
+            UriHelper.NavigateTo("login/");
+        }
     }
 
     private void AddTodo()
     {
         if (!string.IsNullOrWhiteSpace(newItem))
         {
-            toDoList.Add(new ToDoItem(newItem,user));
-            Http.SendJsonAsync(HttpMethod.Post, "api/todo", new { description = newItem });
+            var todo = new ToDoItem(newItem, currentUser);
+            toDoList.Add(todo);
+            Http.SendJsonAsync(HttpMethod.Post, "api/todo", new { description = newItem, id = todo.Id });
             newItem = string.Empty;
         }
     }

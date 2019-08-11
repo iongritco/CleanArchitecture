@@ -1,0 +1,44 @@
+﻿@page "/register"
+@inject IAuthService AuthService
+@inject IUriHelper UriHelper
+
+<h1>Register</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Please enter your details</h5>
+        <EditForm Model="@registerModel" OnValidSubmit="@HandleRegistration">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <InputText Id="email" Class="form-control" @bind-Value="@registerModel.Email" />
+                <ValidationMessage For="@(() => registerModel.Email)" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <InputText Id="password" type="password" Class="form-control" @bind-Value="@registerModel.Password" />
+                <ValidationMessage For="@(() => registerModel.Password)" />
+            </div>
+            <div class="form-group">
+                <label for="password">Confirm Password</label>
+                <InputText Id="password" type="password" Class="form-control" @bind-Value="@registerModel.ConfirmPassword" />
+                <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+    private RegisterModel registerModel = new RegisterModel();
+    private bool displayErrors;
+
+    private async Task HandleRegistration()
+    {
+        await AuthService.Register(registerModel);
+        UriHelper.NavigateTo("/login");
+    }
+}

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApp.Application.User.Commands;
 using ToDoApp.Application.User.Queries;
+using ToDoApp.Identity.User;
 
 namespace ToDoApp.Server.Controllers
 {
@@ -34,16 +35,24 @@ namespace ToDoApp.Server.Controllers
                 return Forbid();
             }
 
-            return Ok(result);
+            return Json(result);
         }
 
         [HttpPost]
         [AllowAnonymous]
         [Route("register")]
-        public async Task<IActionResult> RegisterUser(RegisterUserCommand getTokenQuery)
+        public async Task<IActionResult> RegisterUser(RegisterUserCommand registerUserCommand)
         {
-            await mediator.Send(getTokenQuery);
+            await mediator.Send(registerUserCommand);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("currentuser")]
+        public IActionResult GetCurrentUser()
+        {
+            var currentUser = User.Identity.IsAuthenticated ? User.Identity.Name : null;
+            return Json(currentUser);
         }
     }
 }
