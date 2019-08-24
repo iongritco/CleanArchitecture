@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ToDoApp.Application.Interfaces;
+using ToDoApp.Application.ToDo.Events;
 
 namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
 {
@@ -9,11 +10,16 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
     {
         private readonly IToDoCommandRepository commandRepository;
         private readonly IToDoQueryRepository queryRepository;
+        private readonly IMediator mediator;
 
-        public UpdateToDoCommandHandler(IToDoCommandRepository commandRepository, IToDoQueryRepository queryRepository)
+        public UpdateToDoCommandHandler(
+            IToDoCommandRepository commandRepository, 
+            IToDoQueryRepository queryRepository, 
+            IMediator mediator)
         {
             this.commandRepository = commandRepository;
             this.queryRepository = queryRepository;
+            this.mediator = mediator;
         }
 
         public async Task<Unit> Handle(UpdateToDoCommand request, CancellationToken cancellationToken)
@@ -23,6 +29,7 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
             toDo.SetStatus(request.Status);
 
             await this.commandRepository.UpdateToDo(toDo);
+            await mediator.Publish(new TaskUpdatedEvent(toDo.Username, toDo.Description, toDo.Status));
 
             return Unit.Value;
         }
