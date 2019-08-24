@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ToDoApp.Application.Interfaces;
+using ToDoApp.Entity.Generics;
 
 namespace ToDoApp.Identity.User
 {
@@ -22,10 +24,14 @@ namespace ToDoApp.Identity.User
             return result.Succeeded;
         }
 
-        public async Task RegisterUser(string email, string password)
+        public async Task<Result> RegisterUser(string email, string password)
         {
             var identity = new ApplicationUser { UserName = email, Email = email };
-            await userManager.CreateAsync(identity, password);
+            var identityResult = await userManager.CreateAsync(identity, password);
+
+            return identityResult.Succeeded 
+                    ? Result.Ok() 
+                    : Result.Fail(identityResult.Errors.Select(x => x.Description).Aggregate((a, b) => a + "; " + b));
         }
     }
 }

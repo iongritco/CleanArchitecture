@@ -9,6 +9,6 @@ namespace ToDoApp.Client.Blazor.Services
 
         Task Logout();
 
-        Task Register(RegisterModel registerModel);
+        Task<string> Register(RegisterModel registerModel);
     }
 }

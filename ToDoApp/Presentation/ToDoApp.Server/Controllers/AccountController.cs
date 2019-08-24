@@ -43,8 +43,8 @@ namespace ToDoApp.Server.Controllers
         [Route("register")]
         public async Task<IActionResult> RegisterUser(RegisterUserCommand registerUserCommand)
         {
-            await mediator.Send(registerUserCommand);
-            return Ok();
+            var result = await mediator.Send(registerUserCommand);
+            return Json(result.IsSuccessful ? string.Empty : result.ErrorMessage);
         }
 
         [HttpGet]

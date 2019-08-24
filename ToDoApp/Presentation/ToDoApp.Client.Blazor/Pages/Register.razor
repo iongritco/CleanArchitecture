@@ -4,6 +4,13 @@
 
 <h1>Register</h1>
 
+@if (displayErrors)
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Please enter your details</h5>
@@ -35,10 +42,20 @@
 
     private RegisterModel registerModel = new RegisterModel();
     private bool displayErrors;
+    private string errorMessage;
 
     private async Task HandleRegistration()
     {
-        await AuthService.Register(registerModel);
-        UriHelper.NavigateTo("/login");
+        displayErrors = false;
+        var result = await AuthService.Register(registerModel);
+        if(string.IsNullOrWhiteSpace(result))
+        {
+            UriHelper.NavigateTo("/login");
+        }
+        else
+        {
+            displayErrors = true;
+            errorMessage = result;
+        }
     }
 }

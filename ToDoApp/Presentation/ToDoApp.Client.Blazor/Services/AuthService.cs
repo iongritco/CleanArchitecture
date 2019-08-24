@@ -24,9 +24,10 @@ namespace ToDoApp.Client.Blazor.Services
             this.localStorage = localStorage;
         }
 
-        public async Task Register(RegisterModel registerModel)
+        public async Task<string> Register(RegisterModel registerModel)
         {
-            await httpClient.PostJsonAsync("api/account/register", new { email = registerModel.Email, password = registerModel.Password });
+            var result = await httpClient.PostJsonAsync<string>("api/account/register", new { email = registerModel.Email, password = registerModel.Password });
+            return result;
         }
 
         // PostJsonAsync throws an error when reading string result - this is why I switched to PostAsync

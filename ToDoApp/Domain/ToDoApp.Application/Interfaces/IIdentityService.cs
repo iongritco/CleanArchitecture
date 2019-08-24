@@ -1,5 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using ToDoApp.Entity.Generics;
 
 namespace ToDoApp.Application.Interfaces
 {
@@ -7,6 +7,6 @@ namespace ToDoApp.Application.Interfaces
     {
         Task<bool> Authenticate(string username, string password);
 
-        Task RegisterUser(string email, string password);
+        Task<Result> RegisterUser(string email, string password);
     }
 }
