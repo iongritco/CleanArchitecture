@@ -48,13 +48,13 @@ namespace ToDoApp.Server
             });
 
             services.AddSingleton<ISettings, Settings>();
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
+
+            services.AddMediatR(typeof(GetToDoListQuery).GetTypeInfo().Assembly);
+
             services.AddTransient<IToDoQueryRepository, ToDoQueryRepository>();
             services.AddTransient<IToDoCommandRepository, ToDoCommandRepository>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ITokenService, JwtTokenService>();
-
-            services.AddMediatR(typeof(GetToDoListQuery).GetTypeInfo().Assembly);
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>().AddEntityFrameworkStores<ToDoDataContext>().AddDefaultTokenProviders();
             services.AddAuthentication(options =>
@@ -86,7 +86,7 @@ namespace ToDoApp.Server
                 app.UseBlazorDebugging();
             }
 
-            app.UseClientSideBlazorFiles<ToDoApp.Client.Blazor.Startup>();
+            app.UseClientSideBlazorFiles<Client.Blazor.Startup>();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

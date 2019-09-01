@@ -8,6 +8,7 @@ namespace ToDoApp.Application.ToDo.Events
         public string Email { get; }
 
         public string Description { get; }
+
         public Status Status { get; }
 
         public TaskUpdatedEvent(string email, string description, Status status)

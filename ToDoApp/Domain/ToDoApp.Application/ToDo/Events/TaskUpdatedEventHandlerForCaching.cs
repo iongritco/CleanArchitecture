@@ -13,6 +13,7 @@ namespace ToDoApp.Application.ToDo.Events
         {
             this.logger = logger;
         }
+
         public async Task Handle(TaskUpdatedEvent notification, CancellationToken cancellationToken)
         {
             await Task.Delay(1000);
