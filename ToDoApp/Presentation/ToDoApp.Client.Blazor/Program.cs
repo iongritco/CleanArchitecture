@@ -1,16 +1,27 @@
-﻿using Microsoft.AspNetCore.Blazor.Hosting;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Blazor.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using AuthenticationWithClientSideBlazor.Client;
+using ToDoApp.Client.Blazor.Services;
 
 namespace ToDoApp.Client.Blazor
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddOptions();
+            builder.Services.AddAuthorizationCore();
+            builder.RootComponents.Add<App>("app");
 
-        public static IWebAssemblyHostBuilder CreateHostBuilder(string[] args) =>
-            BlazorWebAssemblyHost.CreateDefaultBuilder()
-                .UseBlazorStartup<Startup>();
+            await builder.Build().RunAsync();
+        }
     }
 }

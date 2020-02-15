@@ -1,5 +1,5 @@
 ﻿@page "/login"
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 @inject HttpClient HttpClient
 @inject IAuthService AuthService
 
@@ -15,7 +15,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Please enter your details</h5>
-        <EditForm Model="@loginModel" OnValidSubmit="@HandleLogin">
+        <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
@@ -45,7 +45,7 @@
         var token = await AuthService.Login(loginModel);
         if (!string.IsNullOrEmpty(token))
         {
-            UriHelper.NavigateTo("/");
+            NavigationManager.NavigateTo("/");
         }
         else
         {

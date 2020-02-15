@@ -1,6 +1,6 @@
 ﻿@page "/register"
 @inject IAuthService AuthService
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Register</h1>
 
@@ -14,9 +14,9 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Please enter your details</h5>
-        <EditForm Model="@registerModel" OnValidSubmit="@HandleRegistration">
+        <EditForm Model="@registerModel" OnValidSubmit="HandleRegistration">
             <DataAnnotationsValidator />
-            <ValidationSummary />
+            <ValidationSummary Model="@registerModel" />
 
             <div class="form-group">
                 <label for="email">Email address</label>
@@ -48,9 +48,9 @@
     {
         displayErrors = false;
         var result = await AuthService.Register(registerModel);
-        if(string.IsNullOrWhiteSpace(result))
+        if (string.IsNullOrWhiteSpace(result))
         {
-            UriHelper.NavigateTo("/login");
+            NavigationManager.NavigateTo("/login");
         }
         else
         {

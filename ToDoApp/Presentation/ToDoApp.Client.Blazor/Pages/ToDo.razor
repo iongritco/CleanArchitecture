@@ -1,8 +1,10 @@
 ﻿@page "/todo"
 @inject HttpClient Http
-@inject IUriHelper UriHelper
 @using ToDoApp.Entity.Entities
 @using ToDoApp.Entity.Enums
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h1>To Do</h1>
 
@@ -53,10 +55,11 @@ else
     List<ToDoItem> toDoList;
     private string newItem;
     private string currentUser;
-    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
 
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         var authState = await authenticationStateTask;
         var user = authState.User;
@@ -68,7 +71,7 @@ else
         }
         else
         {
-            UriHelper.NavigateTo("login/");
+            NavigationManager.NavigateTo("login/");
         }
     }
 

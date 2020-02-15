@@ -86,7 +86,7 @@ namespace ToDoApp.Server
                 app.UseBlazorDebugging();
             }
 
-            app.UseClientSideBlazorFiles<Client.Blazor.Startup>();
+            app.UseClientSideBlazorFiles<Client.Blazor.Program>();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -94,7 +94,7 @@ namespace ToDoApp.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-                endpoints.MapFallbackToClientSideBlazor<ToDoApp.Client.Blazor.Startup>("index.html");
+                endpoints.MapFallbackToClientSideBlazor<ToDoApp.Client.Blazor.Program>("index.html");
             });
         }
     }

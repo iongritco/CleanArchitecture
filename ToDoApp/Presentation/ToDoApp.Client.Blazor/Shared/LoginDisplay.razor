@@ -1,4 +1,6 @@
-﻿<AuthorizeView>
+﻿@using Microsoft.AspNetCore.Components.Authorization
+
+<AuthorizeView>
     <Authorized>
         Hello, @context.User.Identity.Name!
         <a href="LogOut">Log out</a>

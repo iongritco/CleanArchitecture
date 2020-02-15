@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AuthenticationWithClientSideBlazor.Client;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Components.Authorization;
 using ToDoApp.Client.Blazor.ViewModels;
 
 namespace ToDoApp.Client.Blazor.Services
@@ -40,7 +40,7 @@ namespace ToDoApp.Client.Blazor.Services
             }
 
             await localStorage.SetItemAsync("authToken", token);
-            ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
+            ((CustomAuthenticationStateProvider)authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
             return token;
         }
@@ -48,7 +48,7 @@ namespace ToDoApp.Client.Blazor.Services
         public async Task Logout()
         {
             await localStorage.RemoveItemAsync("authToken");
-            ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsLoggedOut();
+            ((CustomAuthenticationStateProvider)authenticationStateProvider).MarkUserAsLoggedOut();
             httpClient.DefaultRequestHeaders.Authorization = null;
         }
     }
