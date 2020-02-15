@@ -2,7 +2,7 @@
 
 namespace ToDoApp.Application.User.Queries
 {
-    public class GetTokenQuery: IRequest<string>
+    public class GetTokenQuery : IRequest<string>
     {
         public string Username { get; set; }
 

@@ -1,5 +1,7 @@
-﻿using MediatR;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using MediatR;
+
 using ToDoApp.Entity.Entities;
 
 namespace ToDoApp.Application.ToDo.Queries

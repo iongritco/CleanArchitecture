@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+
 using ToDoApp.Entity.Enums;
 
 namespace ToDoApp.Entity.Entities

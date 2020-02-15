@@ -1,6 +1,8 @@
-﻿using MediatR;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+
+using MediatR;
+
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Entity.Enums;
 

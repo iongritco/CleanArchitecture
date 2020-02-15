@@ -1,4 +1,5 @@
 ﻿using MediatR;
+
 using ToDoApp.Entity.Generics;
 
 namespace ToDoApp.Application.User.Commands

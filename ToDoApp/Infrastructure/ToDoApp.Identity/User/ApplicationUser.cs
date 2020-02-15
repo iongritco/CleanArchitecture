@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
+
+using Microsoft.AspNetCore.Identity;
 
 namespace ToDoApp.Identity.User
 {
-    public class ApplicationUser: IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser<Guid>
     {
     }
 }

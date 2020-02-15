@@ -1,5 +1,7 @@
-﻿using MediatR;
-using System;
+﻿using System;
+
+using MediatR;
+
 using ToDoApp.Entity.Enums;
 
 namespace ToDoApp.Application.ToDo.Commands.UpdateToDo

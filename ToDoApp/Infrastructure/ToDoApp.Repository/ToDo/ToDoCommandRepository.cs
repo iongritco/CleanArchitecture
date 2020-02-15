@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Entity.Entities;
 
@@ -10,7 +11,7 @@ namespace ToDoApp.Repository.ToDo
         {
             this.toDoDataContext = toDoDataContext;
         }
-        
+
         private readonly ToDoDataContext toDoDataContext;
 
         public async Task CreateToDo(ToDoItem toDo)

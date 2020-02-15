@@ -1,9 +1,13 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Blazor.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
+
 using AuthenticationWithClientSideBlazor.Client;
+
+using Blazored.LocalStorage;
+
+using Microsoft.AspNetCore.Blazor.Hosting;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.DependencyInjection;
+
 using ToDoApp.Client.Blazor.Services;
 
 namespace ToDoApp.Client.Blazor

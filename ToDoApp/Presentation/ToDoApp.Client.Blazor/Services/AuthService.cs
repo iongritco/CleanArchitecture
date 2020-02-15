@@ -1,10 +1,14 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+
 using AuthenticationWithClientSideBlazor.Client;
+
 using Blazored.LocalStorage;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+
 using ToDoApp.Client.Blazor.ViewModels;
 
 namespace ToDoApp.Client.Blazor.Services

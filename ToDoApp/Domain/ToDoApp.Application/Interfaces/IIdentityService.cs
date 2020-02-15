@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+
 using ToDoApp.Entity.Generics;
 
 namespace ToDoApp.Application.Interfaces

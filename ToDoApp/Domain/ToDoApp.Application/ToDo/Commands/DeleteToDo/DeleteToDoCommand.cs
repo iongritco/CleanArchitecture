@@ -1,5 +1,6 @@
-﻿using MediatR;
-using System;
+﻿using System;
+
+using MediatR;
 
 namespace ToDoApp.Application.ToDo.Commands.DeleteToDo
 {

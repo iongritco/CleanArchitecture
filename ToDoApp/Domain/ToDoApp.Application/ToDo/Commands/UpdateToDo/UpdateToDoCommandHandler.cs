@@ -1,6 +1,8 @@
-﻿using MediatR;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+
+using MediatR;
+
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Application.ToDo.Events;
 
@@ -13,8 +15,8 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
         private readonly IMediator mediator;
 
         public UpdateToDoCommandHandler(
-            IToDoCommandRepository commandRepository, 
-            IToDoQueryRepository queryRepository, 
+            IToDoCommandRepository commandRepository,
+            IToDoQueryRepository queryRepository,
             IMediator mediator)
         {
             this.commandRepository = commandRepository;

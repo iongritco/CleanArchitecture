@@ -1,8 +1,11 @@
-﻿using MediatR;
+﻿using System.Linq;
+using System.Threading.Tasks;
+
+using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
+
 using ToDoApp.Application.ToDo.Commands.CreateTask;
 using ToDoApp.Application.ToDo.Commands.DeleteToDo;
 using ToDoApp.Application.ToDo.Commands.UpdateToDo;

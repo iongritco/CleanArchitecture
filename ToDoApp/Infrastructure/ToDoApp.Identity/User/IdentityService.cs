@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Identity;
+
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Entity.Generics;
 
@@ -29,8 +30,8 @@ namespace ToDoApp.Identity.User
             var identity = new ApplicationUser { UserName = email, Email = email };
             var identityResult = await userManager.CreateAsync(identity, password);
 
-            return identityResult.Succeeded 
-                    ? Result.Ok() 
+            return identityResult.Succeeded
+                    ? Result.Ok()
                     : Result.Fail(identityResult.Errors.Select(x => x.Description).Aggregate((a, b) => a + "; " + b));
         }
     }

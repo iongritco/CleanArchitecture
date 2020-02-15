@@ -1,27 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
 using MediatR;
 using MediatR.Pipeline;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using ToDoApp.Repository;
-using ToDoApp.Application.Interfaces;
-using ToDoApp.Application.ToDo.Queries;
-using ToDoApp.Repository;
-using ToDoApp.Repository.ToDo;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
-using System;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using ToDoApp.Identity.User;
+
+using ToDoApp.Application.Interfaces;
+using ToDoApp.Application.ToDo.Queries;
 using ToDoApp.Identity.JwtToken;
+using ToDoApp.Identity.User;
+using ToDoApp.Repository;
+using ToDoApp.Repository;
+using ToDoApp.Repository.ToDo;
 using ToDoApp.Server.Services;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.Linq;
 
 namespace ToDoApp.Server
 {
