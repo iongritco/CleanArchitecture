@@ -7,23 +7,23 @@ namespace ToDoApp.Repository.ToDo
 {
     public class ToDoCommandRepository : IToDoCommandRepository
     {
+        private readonly ToDoDataContext _toDoDataContext;
+
         public ToDoCommandRepository(ToDoDataContext toDoDataContext)
         {
-            this.toDoDataContext = toDoDataContext;
+            _toDoDataContext = toDoDataContext;
         }
-
-        private readonly ToDoDataContext toDoDataContext;
 
         public async Task CreateToDo(ToDoItem toDo)
         {
-            toDoDataContext.Add(toDo);
-            await toDoDataContext.SaveChangesAsync();
+            _toDoDataContext.Add(toDo);
+            await _toDoDataContext.SaveChangesAsync();
         }
 
         public async Task UpdateToDo(ToDoItem toDo)
         {
-            toDoDataContext.Update(toDo);
-            await toDoDataContext.SaveChangesAsync();
+            _toDoDataContext.Update(toDo);
+            await _toDoDataContext.SaveChangesAsync();
         }
     }
 }

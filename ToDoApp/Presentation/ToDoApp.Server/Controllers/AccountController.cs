@@ -20,11 +20,11 @@ namespace ToDoApp.Server.Controllers
     [ApiController]
     public class AccountController : Controller
     {
-        private readonly IMediator mediator;
+        private readonly IMediator _mediator;
 
         public AccountController(IMediator mediator)
         {
-            this.mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -32,7 +32,7 @@ namespace ToDoApp.Server.Controllers
         [Route("login")]
         public async Task<IActionResult> Login(GetTokenQuery getTokenQuery)
         {
-            var result = await mediator.Send(getTokenQuery);
+            var result = await _mediator.Send(getTokenQuery);
             if (string.IsNullOrEmpty(result))
             {
                 return Forbid();
@@ -46,7 +46,7 @@ namespace ToDoApp.Server.Controllers
         [Route("register")]
         public async Task<IActionResult> RegisterUser(RegisterUserCommand registerUserCommand)
         {
-            var result = await mediator.Send(registerUserCommand);
+            var result = await _mediator.Send(registerUserCommand);
             return Json(result.IsSuccessful ? string.Empty : result.ErrorMessage);
         }
 

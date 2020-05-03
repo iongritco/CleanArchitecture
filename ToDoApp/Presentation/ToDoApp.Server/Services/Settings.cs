@@ -11,13 +11,13 @@ namespace ToDoApp.Server.Services
 {
     public class Settings : ISettings
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration _configuration;
 
         public Settings(IConfiguration configuration)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
         }
 
-        public string TokenKey { get => configuration["JwtSecret"]; }
+        public string TokenKey { get => _configuration["JwtSecret"]; }
     }
 }

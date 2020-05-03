@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
+using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
 
@@ -18,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using ToDoApp.Application.Common;
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Application.ToDo.Queries;
 using ToDoApp.Identity.JwtToken;
@@ -32,27 +33,27 @@ namespace ToDoApp.Server
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddNewtonsoftJson();
-            services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ToDoDataConnection")));
+            services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(_configuration.GetConnectionString("ToDoDataConnection")));
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
 
-            services.AddMediatR(typeof(GetToDoListQuery).GetTypeInfo().Assembly);
+            services.AddMediatR();
             services.AddSwagger();
             services.AddIocContainerServices();
-            services.AddIdentity(Configuration);
+            services.AddIdentity(_configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

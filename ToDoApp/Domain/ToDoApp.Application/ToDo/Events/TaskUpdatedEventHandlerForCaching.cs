@@ -9,17 +9,17 @@ namespace ToDoApp.Application.ToDo.Events
 {
     public class TaskUpdatedEventHandlerForCaching : INotificationHandler<TaskUpdatedEvent>
     {
-        private readonly ILogger<TaskUpdatedEventHandlerForCaching> logger;
+        private readonly ILogger<TaskUpdatedEventHandlerForCaching> _logger;
 
         public TaskUpdatedEventHandlerForCaching(ILogger<TaskUpdatedEventHandlerForCaching> logger)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         public async Task Handle(TaskUpdatedEvent notification, CancellationToken cancellationToken)
         {
             await Task.Delay(1000);
-            logger.LogInformation($"Adding task to cache the following details: description-{notification.Description}, user-{notification.Email}, status-{notification.Status}.");
+            _logger.LogInformation($"Adding task to cache the following details: description-{notification.Description}, user-{notification.Email}, status-{notification.Status}.");
         }
     }
 }

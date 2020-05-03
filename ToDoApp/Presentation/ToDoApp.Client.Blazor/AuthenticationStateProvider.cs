@@ -12,25 +12,25 @@ namespace AuthenticationWithClientSideBlazor.Client
 {
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
-        private readonly HttpClient httpClient;
-        private readonly ILocalStorageService localStorage;
+        private readonly HttpClient _httpClient;
+        private readonly ILocalStorageService _localStorage;
 
         public CustomAuthenticationStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
         {
-            this.httpClient = httpClient;
-            this.localStorage = localStorage;
+            _httpClient = httpClient;
+            _localStorage = localStorage;
         }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var savedToken = await localStorage.GetItemAsync<string>("authToken");
+            var savedToken = await _localStorage.GetItemAsync<string>("authToken");
 
             if (string.IsNullOrWhiteSpace(savedToken))
             {
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
 
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
-            var username = await httpClient.GetJsonAsync<string>("api/account/currentuser");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
+            var username = await _httpClient.GetJsonAsync<string>("api/account/currentuser");
             var identity = !string.IsNullOrEmpty(username) ? new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) }, "apiauth") : new ClaimsIdentity();
 
             return new AuthenticationState(new ClaimsPrincipal(identity));

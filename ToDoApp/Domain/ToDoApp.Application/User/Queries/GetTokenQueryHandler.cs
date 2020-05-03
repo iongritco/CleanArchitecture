@@ -9,23 +9,23 @@ namespace ToDoApp.Application.User.Queries
 {
     public class GetTokenQueryHandler : IRequestHandler<GetTokenQuery, string>
     {
-        private readonly IIdentityService identityService;
-        private readonly ITokenService tokenService;
+        private readonly IIdentityService _identityService;
+        private readonly ITokenService _tokenService;
 
         public GetTokenQueryHandler(IIdentityService identityService, ITokenService tokenService)
         {
-            this.identityService = identityService;
-            this.tokenService = tokenService;
+            _identityService = identityService;
+            _tokenService = tokenService;
         }
 
         public async Task<string> Handle(GetTokenQuery request, CancellationToken cancellationToken)
         {
             string token = null;
 
-            var isValid = await identityService.Authenticate(request.Username, request.Password);
+            var isValid = await _identityService.Authenticate(request.Username, request.Password);
             if (isValid)
             {
-                token = tokenService.GenerateToken(request.Username);
+                token = _tokenService.GenerateToken(request.Username);
             }
 
             return token;

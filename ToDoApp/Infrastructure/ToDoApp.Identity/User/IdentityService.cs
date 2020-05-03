@@ -10,25 +10,25 @@ namespace ToDoApp.Identity.User
 {
     public class IdentityService : IIdentityService
     {
-        private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public IdentityService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public async Task<bool> Authenticate(string username, string password)
         {
-            var result = await signInManager.PasswordSignInAsync(username, password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(username, password, false, false);
             return result.Succeeded;
         }
 
         public async Task<Result> RegisterUser(string email, string password)
         {
             var identity = new ApplicationUser { UserName = email, Email = email };
-            var identityResult = await userManager.CreateAsync(identity, password);
+            var identityResult = await _userManager.CreateAsync(identity, password);
 
             return identityResult.Succeeded
                     ? Result.Ok()

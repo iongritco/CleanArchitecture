@@ -10,16 +10,16 @@ namespace ToDoApp.Identity.JwtToken
 {
     public class JwtTokenService : ITokenService
     {
-        private readonly ISettings settings;
+        private readonly ISettings _settings;
 
         public JwtTokenService(ISettings settings)
         {
-            this.settings = settings;
+            _settings = settings;
         }
 
         public string GenerateToken(string username)
         {
-            var symmetricKey = Convert.FromBase64String(settings.TokenKey);
+            var symmetricKey = Convert.FromBase64String(_settings.TokenKey);
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var tokenDescriptor = new SecurityTokenDescriptor
