@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace AuthenticationWithClientSideBlazor.Client
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
 
+            _httpClient.BaseAddress = new Uri("http://localhost:57022/");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
             var username = await _httpClient.GetJsonAsync<string>("api/account/currentuser");
             var identity = !string.IsNullOrEmpty(username) ? new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) }, "apiauth") : new ClaimsIdentity();

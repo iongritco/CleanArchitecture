@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6B070951
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Repository", "Infrastructure\ToDoApp.Repository\ToDoApp.Repository.csproj", "{0ABE8793-A377-48E4-ACE7-73630FCB0C78}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Server", "Presentation\ToDoApp.Server\ToDoApp.Server.csproj", "{1A18845E-81A4-4B27-9DEF-6D5EA4E77CE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Server.REST", "Presentation\ToDoApp.Server\ToDoApp.Server.REST.csproj", "{1A18845E-81A4-4B27-9DEF-6D5EA4E77CE7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.UnitTests", "Tests\ToDoApp.UnitTest\ToDoApp.UnitTests.csproj", "{B821001F-6987-4EC8-A674-6164C8BAEEB0}"
 EndProject

@@ -31,7 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\ToDoApp.Application\ToDoApp.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\ToDoApp.Repository\ToDoApp.Repository.csproj" />
-    <ProjectReference Include="..\ToDoApp.Client.Blazor\ToDoApp.Client.Blazor.csproj" />
   </ItemGroup>
 
 </Project>

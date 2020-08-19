@@ -18,9 +18,9 @@ using ToDoApp.Identity.JwtToken;
 using ToDoApp.Identity.User;
 using ToDoApp.Repository;
 using ToDoApp.Repository.ToDo;
-using ToDoApp.Server.Services;
+using ToDoApp.Server.REST.Services;
 
-namespace ToDoApp.Server.Extensions
+namespace ToDoApp.Server.REST.Extensions
 {
     public static class ServiceExtensions
     {

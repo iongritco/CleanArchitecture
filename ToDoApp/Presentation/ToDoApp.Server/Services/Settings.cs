@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 using ToDoApp.Application.Interfaces;
 
-namespace ToDoApp.Server.Services
+namespace ToDoApp.Server.REST.Services
 {
     public class Settings : ISettings
     {

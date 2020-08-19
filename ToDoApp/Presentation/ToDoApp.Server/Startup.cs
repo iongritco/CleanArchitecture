@@ -26,8 +26,8 @@ using ToDoApp.Identity.User;
 using ToDoApp.Repository;
 using ToDoApp.Repository;
 using ToDoApp.Repository.ToDo;
-using ToDoApp.Server.Extensions;
-using ToDoApp.Server.Services;
+using ToDoApp.Server.REST.Extensions;
+using ToDoApp.Server.REST.Services;
 
 namespace ToDoApp.Server
 {
@@ -71,15 +71,16 @@ namespace ToDoApp.Server
                 });
             }
 
-            app.UseClientSideBlazorFiles<Client.Blazor.Program>();
             app.UseRouting();
+            app.UseCors(builder => builder.WithOrigins("*")
+                              .AllowAnyMethod()
+                              .AllowAnyHeader());
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-                endpoints.MapFallbackToClientSideBlazor<ToDoApp.Client.Blazor.Program>("index.html");
             });
         }
     }

@@ -13,7 +13,7 @@ using ToDoApp.Application.User.Commands;
 using ToDoApp.Application.User.Queries;
 using ToDoApp.Identity.User;
 
-namespace ToDoApp.Server.Controllers
+namespace ToDoApp.Server.REST.Controllers
 {
     [Route("api/account")]
     [Authorize]

@@ -11,7 +11,7 @@ using ToDoApp.Application.ToDo.Commands.DeleteToDo;
 using ToDoApp.Application.ToDo.Commands.UpdateToDo;
 using ToDoApp.Application.ToDo.Queries;
 
-namespace ToDoApp.Server.Controllers
+namespace ToDoApp.Server.REST.Controllers
 {
     [Route("api/todo")]
     [ApiController]
