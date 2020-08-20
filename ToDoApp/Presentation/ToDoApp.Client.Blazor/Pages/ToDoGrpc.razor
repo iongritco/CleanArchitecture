@@ -1,0 +1,24 @@
+﻿@page "/todogrpc"
+@inject GrpcChannel Channel
+@using Google.Protobuf.WellKnownTypes
+@using ToDoApp.Server.GRPC
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (test == null)
+{
+<p><em>Loading...</em></p> }
+else
+{
+@test}
+
+@code { private string test;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = new Greeter.GreeterClient(Channel);
+        var result = await client.SayHelloAsync(new HelloRequest { Name = "dada" });
+        test = result.Message;
+    } }
