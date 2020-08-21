@@ -3,9 +3,10 @@ syntax = "proto3";
 option csharp_namespace = "ToDoApp.Server.GRPC";
 
 package todo;
+import "google/protobuf/timestamp.proto";
 
 service ToDo {
-  rpc GetToDoList (GetToDoListRequest) returns (GetToDoListReply);
+  rpc GetToDoList (GetToDoListRequest) returns (stream GetToDoListReply);
 }
 
 message GetToDoListRequest {
@@ -13,5 +14,7 @@ message GetToDoListRequest {
 }
 
 message GetToDoListReply {
-  string message = 1;
+  string description = 1;
+  int32 status = 2;
+  google.protobuf.Timestamp CreatedDate = 3;
 }
