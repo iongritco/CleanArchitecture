@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
@@ -37,6 +38,7 @@ namespace ToDoApp.Client.Blazor.Services
         // PostJsonAsync throws an error when reading string result - this is why I switched to PostAsync
         public async Task<string> Login(LoginModel loginModel)
         {
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
             var token = await httpClient.PostJsonAsync<string>("api/account/login", new { username = loginModel.Email, password = loginModel.Password });
             if (string.IsNullOrEmpty(token))
             {

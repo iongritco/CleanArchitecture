@@ -26,8 +26,8 @@ using ToDoApp.Identity.User;
 using ToDoApp.Repository;
 using ToDoApp.Repository;
 using ToDoApp.Repository.ToDo;
-using ToDoApp.Server.REST.Extensions;
-using ToDoApp.Server.REST.Services;
+using ToDoApp.Server.Common.Extensions;
+using ToDoApp.Server.Common.Services;
 
 namespace ToDoApp.Server
 {

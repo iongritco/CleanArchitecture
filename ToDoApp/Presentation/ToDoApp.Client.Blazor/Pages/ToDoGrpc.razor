@@ -1,6 +1,5 @@
 ﻿@page "/todogrpc"
 @inject GrpcChannel Channel
-@using Google.Protobuf.WellKnownTypes
 @using ToDoApp.Server.GRPC
 
 <h1>Weather forecast</h1>
@@ -14,11 +13,13 @@ else
 {
 @test}
 
-@code { private string test;
+@code { 
+    
+    private string test;
 
     protected override async Task OnInitializedAsync()
     {
-        var client = new Greeter.GreeterClient(Channel);
-        var result = await client.SayHelloAsync(new HelloRequest { Name = "dada" });
+        var client = new ToDo.ToDoClient(Channel);
+        var result = await client.GetToDoListAsync(new GetToDoListRequest { Username = "ion.gritco@gmail.com" });
         test = result.Message;
     } }

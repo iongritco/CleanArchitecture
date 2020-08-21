@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "ToDoApp.Server.GRPC";
+
+package todo;
+
+service ToDo {
+  rpc GetToDoList (GetToDoListRequest) returns (GetToDoListReply);
+}
+
+message GetToDoListRequest {
+  string username = 1;
+}
+
+message GetToDoListReply {
+  string message = 1;
+}

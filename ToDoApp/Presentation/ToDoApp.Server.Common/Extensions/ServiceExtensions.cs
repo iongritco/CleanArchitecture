@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,9 +15,9 @@ using ToDoApp.Identity.JwtToken;
 using ToDoApp.Identity.User;
 using ToDoApp.Repository;
 using ToDoApp.Repository.ToDo;
-using ToDoApp.Server.REST.Services;
+using ToDoApp.Server.Common.Services;
 
-namespace ToDoApp.Server.REST.Extensions
+namespace ToDoApp.Server.Common.Extensions
 {
     public static class ServiceExtensions
     {
@@ -31,6 +28,7 @@ namespace ToDoApp.Server.REST.Extensions
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationHandler<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceHandler<,>));
         }
+
         public static void AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>().AddEntityFrameworkStores<ToDoDataContext>().AddDefaultTokenProviders();
@@ -40,16 +38,16 @@ namespace ToDoApp.Server.REST.Extensions
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
                 .AddJwtBearer(options =>
+                {
+                    var signingKey = Convert.FromBase64String(configuration["JwtSecret"]);
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        var signingKey = Convert.FromBase64String(configuration["JwtSecret"]);
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuer = false,
-                            ValidateAudience = false,
-                            ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = new SymmetricSecurityKey(signingKey)
-                        };
-                    });
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(signingKey)
+                    };
+                });
         }
 
         public static void AddIocContainerServices(this IServiceCollection services)
