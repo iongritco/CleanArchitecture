@@ -43,16 +43,17 @@ namespace ToDoApp.Server.REST.Controllers
         public async Task<IActionResult> UpdateToDo(UpdateToDoCommand command)
         {
             command.Username = User.Identity.Name;
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            await _mediator.Send(command);
+            return Ok();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteToDo(DeleteToDoCommand command)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteToDo(string id)
         {
-            command.Username = User.Identity.Name;
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            var command = new DeleteToDoCommand(id, User.Identity.Name);
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }

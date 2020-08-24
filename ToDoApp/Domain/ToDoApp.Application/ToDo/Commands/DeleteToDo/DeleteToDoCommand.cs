@@ -6,8 +6,14 @@ namespace ToDoApp.Application.ToDo.Commands.DeleteToDo
 {
     public class DeleteToDoCommand : IRequest
     {
-        public Guid Id { get; set; }
+        public DeleteToDoCommand(string id, string username)
+        {
+            Id = new Guid(id);
+            Username = username;
+        }
 
-        public string Username { get; set; }
+        public Guid Id { get; }
+
+        public string Username { get; }
     }
 }

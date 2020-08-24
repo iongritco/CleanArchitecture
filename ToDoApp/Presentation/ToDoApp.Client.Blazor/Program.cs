@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
-using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +11,10 @@ using ToDoApp.Client.Blazor.Services;
 
 namespace ToDoApp.Client.Blazor
 {
+    using System;
+
+    using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+
     public class Program
     {
         public static async Task Main(string[] args)
@@ -25,6 +28,7 @@ namespace ToDoApp.Client.Blazor
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddSingleton(services =>
             {
                 var httpHandler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());

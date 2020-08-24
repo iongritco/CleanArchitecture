@@ -19,23 +19,23 @@ namespace ToDoApp.Server.REST
 
         public Startup(IConfiguration configuration)
         {
-            this._configuration = configuration;
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddNewtonsoftJson();
-            services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(this._configuration.GetConnectionString("ToDoDataConnection")));
+            services.AddControllersWithViews();
+            services.AddRazorPages();
             services.AddResponseCompression(opts =>
-            {
-                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-                    new[] { "application/octet-stream" });
-            });
-
+                {
+                    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                        new[] { "application/octet-stream" });
+                });
+            services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(this._configuration.GetConnectionString("ToDoDataConnection")));
             services.AddMediatR();
             services.AddSwagger();
             services.AddIocContainerServices();
-            services.AddIdentity(this._configuration);
+            services.AddIdentity(_configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -45,13 +45,20 @@ namespace ToDoApp.Server.REST
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBlazorDebugging();
+                app.UseWebAssemblyDebugging();
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "ToDo API V1");
                 });
             }
+            else
+            {
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
+            app.UseBlazorFrameworkFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
             app.UseCors(builder => builder.WithOrigins("*")
@@ -62,7 +69,9 @@ namespace ToDoApp.Server.REST
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
+                endpoints.MapControllers();
+                endpoints.MapFallbackToFile("index.html");
             });
         }
     }

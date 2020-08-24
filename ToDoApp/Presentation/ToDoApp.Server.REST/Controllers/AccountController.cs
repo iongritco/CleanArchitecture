@@ -33,7 +33,7 @@ namespace ToDoApp.Server.REST.Controllers
                 return Forbid();
             }
 
-            return Json(result);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -42,7 +42,13 @@ namespace ToDoApp.Server.REST.Controllers
         public async Task<IActionResult> RegisterUser(RegisterUserCommand registerUserCommand)
         {
             var result = await _mediator.Send(registerUserCommand);
-            return Json(result.IsSuccessful ? string.Empty : result.ErrorMessage);
+
+            if (!result.IsSuccessful)
+            {
+                Json(result.ErrorMessage);
+            }
+
+            return Ok();
         }
 
         [HttpGet]

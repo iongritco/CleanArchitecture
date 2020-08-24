@@ -67,7 +67,7 @@ else
         if (user.Identity.IsAuthenticated)
         {
             currentUser = user.Identity.Name;
-            toDoList = await Http.GetJsonAsync<List<ToDoItem>>("api/todo");
+            toDoList = await Http.GetFromJsonAsync<List<ToDoItem>>("api/todo");
         }
         else
         {
@@ -75,13 +75,13 @@ else
         }
     }
 
-    private void AddTodo()
+    private async Task AddTodo()
     {
         if (!string.IsNullOrWhiteSpace(newItem))
         {
             var todo = new ToDoItem(newItem, currentUser);
             toDoList.Add(todo);
-            Http.SendJsonAsync(HttpMethod.Post, "api/todo", new { description = newItem, id = todo.Id });
+            await Http.PostAsJsonAsync("api/todo", new { description = newItem, id = todo.Id });
             newItem = string.Empty;
         }
     }
@@ -89,23 +89,23 @@ else
     private void RemoveTodo(Guid guid)
     {
         toDoList.Remove(toDoList.First(x => x.Id.Equals(guid)));
-        Http.SendJsonAsync(HttpMethod.Delete, "api/todo", new { id = guid });
+        Http.DeleteAsync($"api/todo/{guid}");
     }
 
-    private void StartTodo(Guid guid)
+    private async Task StartTodo(Guid guid)
     {
-        UpdateTodo(guid, Status.InProgress);
+        await UpdateTodo(guid, Status.InProgress);
     }
 
-    private void CompleteTodo(Guid guid)
+    private async Task CompleteTodo(Guid guid)
     {
-        UpdateTodo(guid, Status.Completed);
+        await UpdateTodo(guid, Status.Completed);
     }
 
-    private void UpdateTodo(Guid guid, Status status)
+    private async Task UpdateTodo(Guid guid, Status status)
     {
         var todo = toDoList.First(x => x.Id.Equals(guid));
         todo.SetStatus(status);
-        Http.SendJsonAsync(HttpMethod.Put, "api/todo", new { id = guid, description = todo.Description, status = todo.Status });
+        await Http.PutAsJsonAsync("api/todo", new { id = guid, description = todo.Description, status = todo.Status });
     }
 }
