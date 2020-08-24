@@ -3,7 +3,6 @@ using Grpc.Core;
 using MediatR;
 using ToDoApp.Application.ToDo.Queries;
 using Google.Protobuf.WellKnownTypes;
-using System;
 
 namespace ToDoApp.Server.GRPC.Services
 {

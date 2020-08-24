@@ -1,49 +1,31 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using FluentValidation;
-using MediatR;
-using MediatR.Pipeline;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
-using ToDoApp.Application.Common;
-using ToDoApp.Application.Interfaces;
-using ToDoApp.Application.ToDo.Queries;
-using ToDoApp.Identity.JwtToken;
-using ToDoApp.Identity.User;
-using ToDoApp.Repository;
-using ToDoApp.Repository;
-using ToDoApp.Repository.ToDo;
-using ToDoApp.Server.Common.Extensions;
-using ToDoApp.Server.Common.Services;
-
-namespace ToDoApp.Server
+namespace ToDoApp.Server.REST
 {
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.ResponseCompression;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
+    using ToDoApp.Repository;
+    using ToDoApp.Server.Common.Extensions;
+
     public class Startup
     {
         private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this._configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddNewtonsoftJson();
-            services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(_configuration.GetConnectionString("ToDoDataConnection")));
+            services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(this._configuration.GetConnectionString("ToDoDataConnection")));
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
@@ -53,7 +35,7 @@ namespace ToDoApp.Server
             services.AddMediatR();
             services.AddSwagger();
             services.AddIocContainerServices();
-            services.AddIdentity(_configuration);
+            services.AddIdentity(this._configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
