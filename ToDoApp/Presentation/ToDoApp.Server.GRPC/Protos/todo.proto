@@ -6,7 +6,7 @@ package todo;
 import "google/protobuf/timestamp.proto";
 
 service ToDo {
-  rpc GetToDoList (GetToDoListRequest) returns (stream GetToDoListReply);
+  rpc GetToDoList (GetToDoListRequest) returns (GetToDoListReply);
 }
 
 message GetToDoListRequest {
@@ -14,7 +14,11 @@ message GetToDoListRequest {
 }
 
 message GetToDoListReply {
-  string description = 1;
-  int32 status = 2;
-  google.protobuf.Timestamp CreatedDate = 3;
+  repeated ToDoView ToDoList = 1;
+}
+
+message ToDoView {
+	string description = 1;
+	int32 status = 2;
+	google.protobuf.Timestamp CreatedDate = 3;
 }

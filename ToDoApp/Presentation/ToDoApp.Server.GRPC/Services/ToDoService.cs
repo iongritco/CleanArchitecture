@@ -15,14 +15,16 @@ namespace ToDoApp.Server.GRPC.Services
             _mediator = mediator;
         }
 
-        public override async Task GetToDoList(GetToDoListRequest request, IServerStreamWriter<GetToDoListReply> responseStream, ServerCallContext context)
+        public override async Task<GetToDoListReply> GetToDoList(GetToDoListRequest request, ServerCallContext context)
         {
             var result = await _mediator.Send(new GetToDoListQuery(request.Username));
+            var response = new GetToDoListReply();
             foreach (var item in result)
             {
-                var response = new GetToDoListReply { Description = item.Description, Status= (int)item.Status, CreatedDate = Timestamp.FromDateTime(item.CreatedDate.ToUniversalTime()) };
-                await responseStream.WriteAsync(response);
+                response.ToDoList.Add(new ToDoView{CreatedDate = Timestamp.FromDateTime(item.CreatedDate.ToUniversalTime()), Description = item.Description, Status = (int)item.Status});
             }
+
+            return response;
         }
     }
 }

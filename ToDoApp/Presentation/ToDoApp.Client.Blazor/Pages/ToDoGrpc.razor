@@ -62,13 +62,12 @@ else
         {
             currentUser = user.Identity.Name;
             var client = new ToDo.ToDoClient(Channel);
-            using var call = client.GetToDoList(new GetToDoListRequest { Username = currentUser });
+            var response = await client.GetToDoListAsync(new GetToDoListRequest { Username = currentUser });
             toDoList = new List<ToDoItem>();
-            
-            while (await call.ResponseStream.MoveNext(new System.Threading.CancellationToken()))
+
+            foreach (var item in response.ToDoList)
             {
-                var currentItem = call.ResponseStream.Current;
-                var todo = new ToDoItem(currentItem.Description, (Status)currentItem.Status, currentItem.CreatedDate.ToDateTime());
+                var todo = new ToDoItem(item.Description, (Status)item.Status, item.CreatedDate.ToDateTime());
                 toDoList.Add(todo);
             }
         }
