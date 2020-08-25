@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 using Microsoft.Extensions.Configuration;
 
 using ToDoApp.Application.Interfaces;
 
-namespace ToDoApp.Server.Services
+namespace ToDoApp.Server.Common.Services
 {
     public class Settings : ISettings
     {

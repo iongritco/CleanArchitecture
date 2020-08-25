@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using ToDoApp.Application.User.Commands;
 using ToDoApp.Application.User.Queries;
-using ToDoApp.Identity.User;
 
-namespace ToDoApp.Server.Controllers
+namespace ToDoApp.Server.REST.Controllers
 {
     [Route("api/account")]
     [Authorize]
@@ -38,7 +33,7 @@ namespace ToDoApp.Server.Controllers
                 return Forbid();
             }
 
-            return Json(result);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -47,7 +42,13 @@ namespace ToDoApp.Server.Controllers
         public async Task<IActionResult> RegisterUser(RegisterUserCommand registerUserCommand)
         {
             var result = await _mediator.Send(registerUserCommand);
-            return Json(result.IsSuccessful ? string.Empty : result.ErrorMessage);
+
+            if (!result.IsSuccessful)
+            {
+                Json(result.ErrorMessage);
+            }
+
+            return Ok();
         }
 
         [HttpGet]

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using MediatR;
 
@@ -11,7 +10,7 @@ using ToDoApp.Application.ToDo.Commands.DeleteToDo;
 using ToDoApp.Application.ToDo.Commands.UpdateToDo;
 using ToDoApp.Application.ToDo.Queries;
 
-namespace ToDoApp.Server.Controllers
+namespace ToDoApp.Server.REST.Controllers
 {
     [Route("api/todo")]
     [ApiController]
@@ -44,16 +43,17 @@ namespace ToDoApp.Server.Controllers
         public async Task<IActionResult> UpdateToDo(UpdateToDoCommand command)
         {
             command.Username = User.Identity.Name;
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            await _mediator.Send(command);
+            return Ok();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteToDo(DeleteToDoCommand command)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteToDo(string id)
         {
-            command.Username = User.Identity.Name;
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            var command = new DeleteToDoCommand(id, User.Identity.Name);
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }

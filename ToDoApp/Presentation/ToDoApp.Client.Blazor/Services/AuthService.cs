@@ -2,58 +2,62 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-using AuthenticationWithClientSideBlazor.Client;
-
 using Blazored.LocalStorage;
 
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
 using ToDoApp.Client.Blazor.ViewModels;
 
 namespace ToDoApp.Client.Blazor.Services
 {
+    using System.Net.Http.Json;
+
+    using ToDoApp.Application.User.Commands;
+    using ToDoApp.Application.User.Queries;
+
     public class AuthService : IAuthService
     {
-        private readonly HttpClient httpClient;
-        private readonly AuthenticationStateProvider authenticationStateProvider;
-        private readonly ILocalStorageService localStorage;
+        private readonly HttpClient _httpClient;
+        private readonly AuthenticationStateProvider _authenticationStateProvider;
+        private readonly ILocalStorageService _localStorage;
 
         public AuthService(HttpClient httpClient,
                            AuthenticationStateProvider authenticationStateProvider,
                            ILocalStorageService localStorage)
         {
-            this.httpClient = httpClient;
-            this.authenticationStateProvider = authenticationStateProvider;
-            this.localStorage = localStorage;
+            this._httpClient = httpClient;
+            this._authenticationStateProvider = authenticationStateProvider;
+            this._localStorage = localStorage;
         }
 
         public async Task<string> Register(RegisterModel registerModel)
         {
-            var result = await httpClient.PostJsonAsync<string>("api/account/register", new { email = registerModel.Email, password = registerModel.Password });
+            var postTask = await this._httpClient.PostAsJsonAsync("api/account/register", new RegisterUserCommand { Email = registerModel.Email, Password = registerModel.Password });
+            var result = await postTask.Content.ReadAsStringAsync();
             return result;
         }
 
         // PostJsonAsync throws an error when reading string result - this is why I switched to PostAsync
         public async Task<string> Login(LoginModel loginModel)
         {
-            var token = await httpClient.PostJsonAsync<string>("api/account/login", new { username = loginModel.Email, password = loginModel.Password });
+            var tokenTask = await this._httpClient.PostAsJsonAsync("api/account/login", new GetTokenQuery { Username = loginModel.Email, Password = loginModel.Password });
+            var token = await tokenTask.Content.ReadAsStringAsync();
             if (string.IsNullOrEmpty(token))
             {
                 return token;
             }
 
-            await localStorage.SetItemAsync("authToken", token);
-            ((CustomAuthenticationStateProvider)authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            await this._localStorage.SetItemAsync("authToken", token);
+            ((CustomAuthenticationStateProvider)this._authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return token;
         }
 
         public async Task Logout()
         {
-            await localStorage.RemoveItemAsync("authToken");
-            ((CustomAuthenticationStateProvider)authenticationStateProvider).MarkUserAsLoggedOut();
-            httpClient.DefaultRequestHeaders.Authorization = null;
+            await this._localStorage.RemoveItemAsync("authToken");
+            ((CustomAuthenticationStateProvider)this._authenticationStateProvider).MarkUserAsLoggedOut();
+            this._httpClient.DefaultRequestHeaders.Authorization = null;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
             toDo.SetStatus(request.Status);
 
             await _commandRepository.UpdateToDo(toDo);
-            await _mediator.Publish(new TaskUpdatedEvent(toDo.Username, toDo.Description, toDo.Status));
+            await _mediator.Publish(new TaskUpdatedEvent(toDo.Username, toDo.Description, toDo.Status), cancellationToken);
 
             return Unit.Value;
         }
