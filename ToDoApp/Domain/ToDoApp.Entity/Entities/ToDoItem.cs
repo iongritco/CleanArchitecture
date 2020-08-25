@@ -12,11 +12,12 @@ namespace ToDoApp.Entity.Entities
         {
         }
 
-        public ToDoItem(string description, Status status, DateTime createdDate)
+        public ToDoItem(string description, Status status, DateTime createdDate, string id)
         {
             Status = status;
             SetDescription(description);
             CreatedDate = createdDate;
+            Id = new Guid(id);
         }
 
         public ToDoItem(Guid id, string description, string username)
