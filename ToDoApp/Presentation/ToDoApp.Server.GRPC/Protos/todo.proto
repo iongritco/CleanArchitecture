@@ -18,14 +18,13 @@ message GetToDoListRequest {
 }
 
 message GetToDoListReply {
+	message ToDoView {
+		string description = 1;
+		int32 status = 2;
+		google.protobuf.Timestamp CreatedDate = 3;
+		string id = 4;
+	}
 	repeated ToDoView ToDoList = 1;
-}
-
-message ToDoView {
-	string description = 1;
-	int32 status = 2;
-	google.protobuf.Timestamp CreatedDate = 3;
-	string id = 4;
 }
 
 message AddToDoRequest {

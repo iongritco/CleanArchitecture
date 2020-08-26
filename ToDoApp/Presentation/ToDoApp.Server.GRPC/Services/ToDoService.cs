@@ -25,7 +25,7 @@ namespace ToDoApp.Server.GRPC.Services
             foreach (var item in result)
             {
                 response.ToDoList.Add(
-                    new ToDoView
+                    new GetToDoListReply.Types.ToDoView
                         {
                             CreatedDate = Timestamp.FromDateTime(item.CreatedDate.ToUniversalTime()),
                             Description = item.Description,
