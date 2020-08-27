@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 using ToDoApp.Client.Blazor.ViewModels;
 
+using System.Net.Http.Json;
+
+using ToDoApp.Application.User.Commands;
+using ToDoApp.Application.User.Queries;
+
 namespace ToDoApp.Client.Blazor.Services
 {
-    using System.Net.Http.Json;
 
-    using ToDoApp.Application.User.Commands;
-    using ToDoApp.Application.User.Queries;
 
     public class AuthService : IAuthService
     {

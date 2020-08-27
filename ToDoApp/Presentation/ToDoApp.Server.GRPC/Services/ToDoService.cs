@@ -6,9 +6,12 @@ using Google.Protobuf.WellKnownTypes;
 using ToDoApp.Application.ToDo.Commands.CreateToDo;
 using ToDoApp.Application.ToDo.Commands.DeleteToDo;
 using ToDoApp.Application.ToDo.Commands.UpdateToDo;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ToDoApp.Server.GRPC.Services
 {
+
+    [Authorize]
     public class ToDoService : ToDo.ToDoBase
     {
         private readonly IMediator _mediator;

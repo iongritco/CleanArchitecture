@@ -1,11 +1,14 @@
 ﻿@page "/todogrpc"
 @inject GrpcChannel Channel
+@using Blazored.LocalStorage
 @using ToDoApp.Server.GRPC
 @using Microsoft.AspNetCore.Components.Authorization
 @using ToDoApp.Entity.Entities
 @using ToDoApp.Entity.Enums
+@using Grpc.Core;
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ILocalStorageService LocalStorageService
 
 <h1>To Do GRPC</h1>
 
@@ -31,7 +34,7 @@ else
         <tbody>
             @foreach (var toDo in toDoList)
             {
-                <tr class="@(@toDo.Status==Status.Completed?"table-success":@toDo.Status==Status.InProgress?"table-warning":"table-primary")">
+                <tr class="@(@toDo.Status==Entity.Enums.Status.Completed?"table-success":@toDo.Status==Entity.Enums.Status.InProgress?"table-warning":"table-primary")">
                     <td>@toDo.CreatedDate.ToShortDateString()</td>
                     <td>@toDo.Description</td>
                     <td>@toDo.Status.ToString()</td>
@@ -61,6 +64,8 @@ else
 
     private ToDo.ToDoClient grpcClient;
 
+    private Metadata headers;
+
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
 
@@ -69,16 +74,19 @@ else
         var authState = await authenticationStateTask;
         var user = authState.User;
         grpcClient = new ToDo.ToDoClient(Channel);
+        var token = await LocalStorageService.GetItemAsync<string>("authToken");
+        headers = new Metadata();
+        headers.Add("Authorization", $"Bearer {token}");
 
         if (user.Identity.IsAuthenticated)
         {
             currentUser = user.Identity.Name;
-            var response = await grpcClient.GetToDoListAsync(new GetToDoListRequest { Username = currentUser });
+            var response = await grpcClient.GetToDoListAsync(new GetToDoListRequest { Username = currentUser }, headers);
             toDoList = new List<ToDoItem>();
 
             foreach (var item in response.ToDoList)
             {
-                var todo = new ToDoItem(item.Description, (Status)item.Status, item.CreatedDate.ToDateTime(), item.Id);
+                var todo = new ToDoItem(item.Description, (Entity.Enums.Status)item.Status, item.CreatedDate.ToDateTime(), item.Id);
                 toDoList.Add(todo);
             }
         }
@@ -96,7 +104,7 @@ else
         {
             var todo = new ToDoItem(newItem, currentUser);
             toDoList.Add(todo);
-            await grpcClient.AddToDoAsync(new AddToDoRequest { Description = todo.Description, Id = todo.Id.ToString(), Username = todo.Username });
+            await grpcClient.AddToDoAsync(new AddToDoRequest { Description = todo.Description, Id = todo.Id.ToString(), Username = todo.Username }, headers);
             newItem = string.Empty;
         }
     }
@@ -104,24 +112,24 @@ else
     private async Task RemoveTodo(Guid guid)
     {
         toDoList.Remove(toDoList.First(x => x.Id.Equals(guid)));
-        await grpcClient.DeleteToDoAsync(new DeleteToDoRequest { Id = guid.ToString(), Username = currentUser });
+        await grpcClient.DeleteToDoAsync(new DeleteToDoRequest { Id = guid.ToString(), Username = currentUser }, headers);
     }
 
     private async Task StartTodo(Guid guid)
     {
-        await UpdateTodo(guid, Status.InProgress);
+        await UpdateTodo(guid, Entity.Enums.Status.InProgress);
     }
 
     private async Task CompleteTodo(Guid guid)
     {
-        await UpdateTodo(guid, Status.Completed);
+        await UpdateTodo(guid, Entity.Enums.Status.Completed);
     }
 
-    private async Task UpdateTodo(Guid guid, Status status)
+    private async Task UpdateTodo(Guid guid, Entity.Enums.Status status)
     {
         var todo = toDoList.First(x => x.Id.Equals(guid));
         todo.SetStatus(status);
-        await grpcClient.UpdateToDoAsync(new UpdateToDoRequest { Username = currentUser, Description = todo.Description, Id = guid.ToString(), Status = (int)todo.Status });
+        await grpcClient.UpdateToDoAsync(new UpdateToDoRequest { Username = currentUser, Description = todo.Description, Id = guid.ToString(), Status = (int)todo.Status }, headers);
     }
 
 }

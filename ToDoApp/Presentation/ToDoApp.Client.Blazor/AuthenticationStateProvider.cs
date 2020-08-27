@@ -23,7 +23,7 @@
         }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var savedToken = await this._localStorage.GetItemAsync<string>("authToken");
+            var savedToken = await _localStorage.GetItemAsync<string>("authToken");
 
             if (string.IsNullOrWhiteSpace(savedToken))
             {
@@ -31,7 +31,7 @@
             }
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", savedToken);
-            var username = await this._httpClient.GetFromJsonAsync<string>("api/account/currentuser");
+            var username = await _httpClient.GetFromJsonAsync<string>("api/account/currentuser");
             var identity = !string.IsNullOrEmpty(username) ? new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) }, "apiauth") : new ClaimsIdentity();
 
             return new AuthenticationState(new ClaimsPrincipal(identity));
