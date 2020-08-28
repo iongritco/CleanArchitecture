@@ -32,22 +32,26 @@ namespace ToDoApp.Server.Common.Extensions
         public static void AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>().AddEntityFrameworkStores<ToDoDataContext>().AddDefaultTokenProviders();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options =>
-                {
-                    var signingKey = Convert.FromBase64String(configuration["JwtSecret"]);
-                    options.TokenValidationParameters = new TokenValidationParameters
+            services.AddAuthentication(
+                options =>
                     {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(signingKey)
-                    };
-                });
+                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                .AddJwtBearer(
+                options =>
+                    {
+                        var signingKey = Convert.FromBase64String(configuration["JwtSecret"]);
+                        options.TokenValidationParameters = new TokenValidationParameters
+                                                                {
+                                                                    ValidateIssuer = false,
+                                                                    ValidateAudience = false,
+                                                                    ValidateIssuerSigningKey = true,
+                                                                    IssuerSigningKey =
+                                                                        new SymmetricSecurityKey(signingKey)
+                                                                };
+                    });
+            services.AddAuthorization();
         }
 
         public static void AddIocContainerServices(this IServiceCollection services)

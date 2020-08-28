@@ -53,6 +53,8 @@ namespace ToDoApp.Server.GRPC
             app.UseCors(builder => builder.WithOrigins("*")
                   .AllowAnyMethod()
                   .AllowAnyHeader());
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
