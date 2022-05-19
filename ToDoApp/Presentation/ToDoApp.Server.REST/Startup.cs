@@ -31,7 +31,7 @@ namespace ToDoApp.Server.REST
                     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                         new[] { "application/octet-stream" });
                 });
-            services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(this._configuration.GetConnectionString("ToDoDataConnection")));
+            services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(_configuration.GetConnectionString("ToDoDataConnection")));
             services.AddMediatR();
             services.AddSwagger();
             services.AddIocContainerServices();

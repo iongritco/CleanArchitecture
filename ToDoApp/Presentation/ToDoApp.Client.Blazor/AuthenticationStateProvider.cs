@@ -41,14 +41,14 @@
         {
             var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, name) }, "apiauth"));
             var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
-            this.NotifyAuthenticationStateChanged(authState);
+            NotifyAuthenticationStateChanged(authState);
         }
 
         public void MarkUserAsLoggedOut()
         {
             var anonymousUser = new ClaimsPrincipal(new ClaimsIdentity());
             var authState = Task.FromResult(new AuthenticationState(anonymousUser));
-            this.NotifyAuthenticationStateChanged(authState);
+            NotifyAuthenticationStateChanged(authState);
         }
     }
 }

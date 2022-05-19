@@ -58,7 +58,7 @@ namespace ToDoApp.Server.GRPC.Services
         public override async Task<Empty> DeleteToDo(DeleteToDoRequest request, ServerCallContext context)
         {
             var command = new DeleteToDoCommand(request.Id, request.Username);
-            await this._mediator.Send(command);
+            await _mediator.Send(command);
 
             return new Empty();
         }

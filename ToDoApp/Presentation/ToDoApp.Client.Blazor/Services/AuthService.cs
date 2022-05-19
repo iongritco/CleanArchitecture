@@ -27,14 +27,14 @@ namespace ToDoApp.Client.Blazor.Services
                            AuthenticationStateProvider authenticationStateProvider,
                            ILocalStorageService localStorage)
         {
-            this._httpClient = httpClient;
-            this._authenticationStateProvider = authenticationStateProvider;
-            this._localStorage = localStorage;
+            _httpClient = httpClient;
+            _authenticationStateProvider = authenticationStateProvider;
+            _localStorage = localStorage;
         }
 
         public async Task<string> Register(RegisterModel registerModel)
         {
-            var postTask = await this._httpClient.PostAsJsonAsync("api/account/register", new RegisterUserCommand { Email = registerModel.Email, Password = registerModel.Password });
+            var postTask = await _httpClient.PostAsJsonAsync("api/account/register", new RegisterUserCommand { Email = registerModel.Email, Password = registerModel.Password });
             var result = await postTask.Content.ReadAsStringAsync();
             return result;
         }
@@ -42,24 +42,24 @@ namespace ToDoApp.Client.Blazor.Services
         // PostJsonAsync throws an error when reading string result - this is why I switched to PostAsync
         public async Task<string> Login(LoginModel loginModel)
         {
-            var tokenTask = await this._httpClient.PostAsJsonAsync("api/account/login", new GetTokenQuery { Username = loginModel.Email, Password = loginModel.Password });
+            var tokenTask = await _httpClient.PostAsJsonAsync("api/account/login", new GetTokenQuery { Username = loginModel.Email, Password = loginModel.Password });
             var token = await tokenTask.Content.ReadAsStringAsync();
             if (string.IsNullOrEmpty(token))
             {
                 return token;
             }
 
-            await this._localStorage.SetItemAsync("authToken", token);
-            ((CustomAuthenticationStateProvider)this._authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
+            await _localStorage.SetItemAsync("authToken", token);
+            ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return token;
         }
 
         public async Task Logout()
         {
-            await this._localStorage.RemoveItemAsync("authToken");
-            ((CustomAuthenticationStateProvider)this._authenticationStateProvider).MarkUserAsLoggedOut();
-            this._httpClient.DefaultRequestHeaders.Authorization = null;
+            await _localStorage.RemoveItemAsync("authToken");
+            ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
+            _httpClient.DefaultRequestHeaders.Authorization = null;
         }
     }
 }
