@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\ToDoApp.Application\ToDoApp.Application.csproj" />
-    <ProjectReference Include="..\..\Domain\ToDoApp.Entity\ToDoApp.Entity.csproj" />
+    <ProjectReference Include="..\..\Domain\ToDoApp.Domain\ToDoApp.Domain.csproj" />
   </ItemGroup>
 
 </Project>

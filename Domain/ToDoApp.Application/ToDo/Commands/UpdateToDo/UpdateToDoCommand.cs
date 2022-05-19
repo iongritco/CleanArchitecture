@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Text.Json.Serialization;
 using MediatR;
 
 using ToDoApp.Entity.Enums;
@@ -8,6 +8,11 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
 {
     public class UpdateToDoCommand : IRequest
     {
+        [JsonConstructor]
+        public UpdateToDoCommand()
+        {
+        }
+
         public UpdateToDoCommand(string id, string description, int status, string username)
         {
             Id = new Guid(id);

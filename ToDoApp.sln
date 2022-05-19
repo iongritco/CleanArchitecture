@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6B070951-0226-4CD1-A5C1-2E46FD14A339}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Repository", "Infrastructure\ToDoApp.Repository\ToDoApp.Repository.csproj", "{0ABE8793-A377-48E4-ACE7-73630FCB0C78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Persistence", "Infrastructure\ToDoApp.Persistence\ToDoApp.Persistence.csproj", "{0ABE8793-A377-48E4-ACE7-73630FCB0C78}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.UnitTests", "Tests\ToDoApp.UnitTest\ToDoApp.UnitTests.csproj", "{B821001F-6987-4EC8-A674-6164C8BAEEB0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Application", "Domain\ToDoApp.Application\ToDoApp.Application.csproj", "{89ED4F66-CB6E-4874-A528-E83408E1E2D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Entity", "Domain\ToDoApp.Entity\ToDoApp.Entity.csproj", "{72F7E0A4-9471-4E4C-AFBE-34D4EE9DFA90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Domain", "Domain\ToDoApp.Domain\ToDoApp.Domain.csproj", "{72F7E0A4-9471-4E4C-AFBE-34D4EE9DFA90}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Client.Blazor", "Presentation\ToDoApp.Client.Blazor\ToDoApp.Client.Blazor.csproj", "{12FF23FF-53D4-4DB4-A680-CF1B48E1FA56}"
 EndProject
