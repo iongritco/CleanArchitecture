@@ -19,7 +19,7 @@ namespace ToDoApp.Application.Common
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            var context = new ValidationContext(request);
+            var context = new ValidationContext<TRequest>(request);
 
             var failures = _validators
                 .Select(v => v.Validate(context))

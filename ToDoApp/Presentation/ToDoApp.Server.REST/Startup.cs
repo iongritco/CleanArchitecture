@@ -73,6 +73,16 @@ namespace ToDoApp.Server.REST
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+
+            InitializeDatabase(app);
+        }
+
+        private void InitializeDatabase(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<ToDoDataContext>().Database.Migrate();
+            }
         }
     }
 }
