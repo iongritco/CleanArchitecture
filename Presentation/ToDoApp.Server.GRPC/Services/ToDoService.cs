@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Grpc.Core;
+﻿using Grpc.Core;
 using MediatR;
 using ToDoApp.Application.ToDo.Queries;
 using Google.Protobuf.WellKnownTypes;

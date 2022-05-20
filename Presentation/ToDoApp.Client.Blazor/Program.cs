@@ -1,11 +1,8 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-
+﻿
 using Blazored.LocalStorage;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.DependencyInjection;
 
 using ToDoApp.Client.Blazor.Services;
 

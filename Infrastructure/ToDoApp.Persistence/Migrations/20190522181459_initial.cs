@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ToDoApp.Repository.Migrations

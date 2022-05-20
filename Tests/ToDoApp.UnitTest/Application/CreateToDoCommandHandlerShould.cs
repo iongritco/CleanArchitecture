@@ -2,8 +2,6 @@
 using FluentAssertions;
 using MediatR;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Application.ToDo.Commands.CreateToDo;
 using ToDoApp.Entity.Entities;
