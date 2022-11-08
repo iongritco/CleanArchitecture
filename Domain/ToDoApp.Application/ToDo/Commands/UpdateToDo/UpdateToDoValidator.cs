@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ToDoApp.Entity.Enums;
+using ToDoApp.Domain.Enums;
 
 namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
 {

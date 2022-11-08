@@ -2,8 +2,8 @@
 using MediatR;
 
 using ToDoApp.Application.Interfaces;
-using ToDoApp.Entity.Entities;
-using ToDoApp.Entity.Enums;
+using ToDoApp.Domain.Entities;
+using ToDoApp.Domain.Enums;
 
 namespace ToDoApp.Application.ToDo.Queries
 {

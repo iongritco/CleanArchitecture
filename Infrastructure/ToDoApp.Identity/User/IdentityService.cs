@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 
 using ToDoApp.Application.Interfaces;
-using ToDoApp.Entity.Generics;
+using ToDoApp.Domain.Generics;
 
 namespace ToDoApp.Identity.User
 {

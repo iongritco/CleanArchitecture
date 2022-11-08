@@ -2,7 +2,7 @@
 using MediatR;
 
 using ToDoApp.Application.Interfaces;
-using ToDoApp.Entity.Generics;
+using ToDoApp.Domain.Generics;
 
 namespace ToDoApp.Application.User.Commands
 {

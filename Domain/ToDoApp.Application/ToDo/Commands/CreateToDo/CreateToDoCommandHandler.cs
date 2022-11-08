@@ -2,7 +2,7 @@
 using MediatR;
 
 using ToDoApp.Application.Interfaces;
-using ToDoApp.Entity.Entities;
+using ToDoApp.Domain.Entities;
 
 namespace ToDoApp.Application.ToDo.Commands.CreateToDo
 {

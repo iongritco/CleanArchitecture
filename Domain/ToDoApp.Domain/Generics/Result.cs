@@ -1,4 +1,4 @@
-﻿namespace ToDoApp.Entity.Generics
+﻿namespace ToDoApp.Domain.Generics
 {
     public class Result
     {

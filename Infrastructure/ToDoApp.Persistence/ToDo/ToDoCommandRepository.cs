@@ -1,8 +1,7 @@
-﻿
-using ToDoApp.Application.Interfaces;
-using ToDoApp.Entity.Entities;
+﻿using ToDoApp.Application.Interfaces;
+using ToDoApp.Domain.Entities;
 
-namespace ToDoApp.Repository.ToDo
+namespace ToDoApp.Persistence.ToDo
 {
     public class ToDoCommandRepository : IToDoCommandRepository
     {

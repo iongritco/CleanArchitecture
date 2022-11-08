@@ -1,10 +1,8 @@
-﻿namespace Posts.Tests
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using AutoFixture.Kernel;
+﻿using System.Reflection;
+using AutoFixture.Kernel;
 
+namespace ToDoApp.UnitTests
+{
     public class AutoFixtureConstructorArgument : ISpecimenBuilder
     {
         private readonly object _value;

@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ToDoApp.Domain.Enums;
 
-using ToDoApp.Entity.Enums;
-
-namespace ToDoApp.Entity.Entities
+namespace ToDoApp.Domain.Entities
 {
     public class ToDoItem
     {

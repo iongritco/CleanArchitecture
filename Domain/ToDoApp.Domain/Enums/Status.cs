@@ -1,4 +1,4 @@
-﻿namespace ToDoApp.Entity.Enums
+﻿namespace ToDoApp.Domain.Enums
 {
     public enum Status
     {

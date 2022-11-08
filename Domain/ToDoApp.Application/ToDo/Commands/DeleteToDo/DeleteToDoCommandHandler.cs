@@ -2,7 +2,7 @@
 using MediatR;
 
 using ToDoApp.Application.Interfaces;
-using ToDoApp.Entity.Enums;
+using ToDoApp.Domain.Enums;
 
 namespace ToDoApp.Application.ToDo.Commands.DeleteToDo
 {

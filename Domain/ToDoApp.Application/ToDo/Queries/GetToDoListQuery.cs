@@ -1,7 +1,6 @@
 ﻿
 using MediatR;
-
-using ToDoApp.Entity.Entities;
+using ToDoApp.Domain.Entities;
 
 namespace ToDoApp.Application.ToDo.Queries
 {

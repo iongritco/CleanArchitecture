@@ -1,5 +1,4 @@
-﻿
-using MediatR;
+﻿using MediatR;
 
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Application.ToDo.Events;

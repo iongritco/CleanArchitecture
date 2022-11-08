@@ -1,6 +1,5 @@
 ﻿using MediatR;
-
-using ToDoApp.Entity.Enums;
+using ToDoApp.Domain.Enums;
 
 namespace ToDoApp.Application.ToDo.Events
 {

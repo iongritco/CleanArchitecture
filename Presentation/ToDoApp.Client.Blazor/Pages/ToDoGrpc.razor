@@ -3,9 +3,9 @@
 @using Blazored.LocalStorage
 @using ToDoApp.Server.GRPC
 @using Microsoft.AspNetCore.Components.Authorization
-@using ToDoApp.Entity.Entities
-@using ToDoApp.Entity.Enums
 @using Grpc.Core;
+@using ToDoApp.Domain.Entities
+@using Status = ToDoApp.Domain.Enums.Status
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ILocalStorageService LocalStorageService
@@ -34,7 +34,7 @@ else
         <tbody>
             @foreach (var toDo in toDoList)
             {
-                <tr class="@(@toDo.Status==Entity.Enums.Status.Completed?"table-success":@toDo.Status==Entity.Enums.Status.InProgress?"table-warning":"table-primary")">
+                <tr class="@(@toDo.Status==Status.Completed?"table-success":@toDo.Status==Status.InProgress?"table-warning":"table-primary")">
                     <td>@toDo.CreatedDate.ToShortDateString()</td>
                     <td>@toDo.Description</td>
                     <td>@toDo.Status.ToString()</td>
@@ -86,7 +86,7 @@ else
 
             foreach (var item in response.ToDoList)
             {
-                var todo = new ToDoItem(item.Description, (Entity.Enums.Status)item.Status, item.CreatedDate.ToDateTime(), item.Id);
+                var todo = new ToDoItem(item.Description, (Status)item.Status, item.CreatedDate.ToDateTime(), item.Id);
                 toDoList.Add(todo);
             }
         }
@@ -117,15 +117,15 @@ else
 
     private async Task StartTodo(Guid guid)
     {
-        await UpdateTodo(guid, Entity.Enums.Status.InProgress);
+        await UpdateTodo(guid, Status.InProgress);
     }
 
     private async Task CompleteTodo(Guid guid)
     {
-        await UpdateTodo(guid, Entity.Enums.Status.Completed);
+        await UpdateTodo(guid, Status.Completed);
     }
 
-    private async Task UpdateTodo(Guid guid, Entity.Enums.Status status)
+    private async Task UpdateTodo(Guid guid, Status status)
     {
         var todo = toDoList.First(x => x.Id.Equals(guid));
         todo.SetStatus(status);

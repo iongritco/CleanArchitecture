@@ -4,10 +4,10 @@ using MediatR;
 using Moq;
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Application.ToDo.Commands.CreateToDo;
-using ToDoApp.Entity.Entities;
+using ToDoApp.Domain.Entities;
 using Xunit;
 
-namespace ToDoApp.UnitTests.Application
+namespace ToDoApp.UnitTests.Application.ToDo
 {
     public class CreateToDoCommandHandlerShould
     {
@@ -21,7 +21,7 @@ namespace ToDoApp.UnitTests.Application
             var result = await sut.Handle(command, CancellationToken.None);
 
             todoCommandRepositoryMock.Verify(call => call.CreateToDo(
-                It.Is<ToDoItem>(x => x.Id.Equals(command.Id) && x.Description.Equals(command.Description) && x.Username.Equals(command.Username))), 
+                It.Is<ToDoItem>(x => x.Id.Equals(command.Id) && x.Description.Equals(command.Description) && x.Username.Equals(command.Username))),
                 Times.Once);
             result.Should().Be(Unit.Value);
         }

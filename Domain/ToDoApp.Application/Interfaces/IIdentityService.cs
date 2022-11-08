@@ -1,5 +1,5 @@
 ﻿
-using ToDoApp.Entity.Generics;
+using ToDoApp.Domain.Generics;
 
 namespace ToDoApp.Application.Interfaces
 {

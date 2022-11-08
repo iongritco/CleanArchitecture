@@ -1,12 +1,10 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
-using ToDoApp.Entity.Entities;
+using ToDoApp.Domain.Entities;
 using ToDoApp.Identity.User;
 
-namespace ToDoApp.Repository
+namespace ToDoApp.Persistence
 {
     public class ToDoDataContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
