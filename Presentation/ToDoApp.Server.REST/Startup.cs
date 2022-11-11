@@ -1,20 +1,10 @@
 using ToDoApp.Persistence;
+using ToDoApp.Server.Common.Extensions;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToDoApp.Server.REST
 {
-    using System.Linq;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.ResponseCompression;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-
-    using ToDoApp.Repository;
-    using ToDoApp.Server.Common.Extensions;
-
     public class Startup
     {
         private readonly IConfiguration _configuration;

@@ -1,9 +1,8 @@
-﻿
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Components.Authorization;
-
+using Microsoft.AspNetCore.Components.Web;
 using ToDoApp.Client.Blazor.Services;
 
 namespace ToDoApp.Client.Blazor
@@ -18,6 +17,7 @@ namespace ToDoApp.Client.Blazor
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
+            builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddAuthorizationCore();
