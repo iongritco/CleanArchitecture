@@ -32,7 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\ToDoApp.Application\ToDoApp.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\ToDoApp.Persistence\ToDoApp.Persistence.csproj" />
-    <ProjectReference Include="..\ToDoApp.Client.Blazor\ToDoApp.Client.Blazor.csproj" />
     <ProjectReference Include="..\ToDoApp.Server.Common\ToDoApp.Server.Common.csproj" />
   </ItemGroup>
 

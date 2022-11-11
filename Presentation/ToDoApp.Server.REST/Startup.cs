@@ -1,6 +1,5 @@
 using ToDoApp.Persistence;
 using ToDoApp.Server.Common.Extensions;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
 namespace ToDoApp.Server.REST
@@ -16,13 +15,7 @@ namespace ToDoApp.Server.REST
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddRazorPages();
-            services.AddResponseCompression(opts =>
-                {
-                    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-                        new[] { "application/octet-stream" });
-                });
+            services.AddControllers();
             services.AddDbContext<ToDoDataContext>(options => options.UseSqlServer(_configuration.GetConnectionString("ToDoDataConnection")));
             services.AddMediatR();
             services.AddSwagger();
@@ -32,12 +25,9 @@ namespace ToDoApp.Server.REST
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseResponseCompression();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseWebAssemblyDebugging();
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
@@ -48,10 +38,8 @@ namespace ToDoApp.Server.REST
             {
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseBlazorFrameworkFiles();
-            app.UseStaticFiles();
 
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors(builder => builder.WithOrigins("*")
                               .AllowAnyMethod()
@@ -61,9 +49,7 @@ namespace ToDoApp.Server.REST
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
             });
 
             InitializeDatabase(app);
@@ -71,7 +57,7 @@ namespace ToDoApp.Server.REST
 
         private void InitializeDatabase(IApplicationBuilder app)
         {
-            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope())
             {
                 scope.ServiceProvider.GetRequiredService<ToDoDataContext>().Database.Migrate();
             }
