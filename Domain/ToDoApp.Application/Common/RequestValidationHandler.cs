@@ -13,7 +13,7 @@ namespace ToDoApp.Application.Common
             _validators = validators;
         }
 
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var context = new ValidationContext<TRequest>(request);
 
@@ -23,7 +23,7 @@ namespace ToDoApp.Application.Common
                 .Where(f => f != null)
                 .ToList();
 
-            if (failures.Count != 0)
+            if(failures.Count != 0)
             {
                 throw new ValidationException(failures);
             }

@@ -14,7 +14,6 @@ using ToDoApp.Identity.JwtToken;
 using ToDoApp.Identity.User;
 using ToDoApp.Persistence;
 using ToDoApp.Persistence.ToDo;
-using ToDoApp.Repository;
 using ToDoApp.Server.Common.Services;
 
 namespace ToDoApp.Server.Common.Extensions
