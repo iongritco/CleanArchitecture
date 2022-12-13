@@ -4,7 +4,7 @@ option csharp_namespace = "ToDoApp.Server.GRPC";
 
 package todo;
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/Empty.proto";
+import "google/protobuf/empty.proto";
 
 service ToDo {
 	rpc GetToDoList (GetToDoListRequest) returns (GetToDoListReply);
