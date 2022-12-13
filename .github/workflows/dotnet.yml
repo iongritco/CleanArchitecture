@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Install Protoc
+      uses: arduino/setup-protoc@v1
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
