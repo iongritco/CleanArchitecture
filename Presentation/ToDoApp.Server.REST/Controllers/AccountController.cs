@@ -43,18 +43,18 @@ namespace ToDoApp.Server.REST.Controllers
 
             if (!result.IsSuccessful)
             {
-                Json(result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
             }
 
             return Ok();
         }
 
         [HttpGet]
-        [Route("currentuser")]
+        [Route("me/name")]
         public IActionResult GetCurrentUser()
         {
             var currentUser = User.Identity.IsAuthenticated ? User.Identity.Name : null;
-            return Json(currentUser);
+            return Ok(currentUser);
         }
     }
 }

@@ -37,7 +37,6 @@ namespace ToDoApp.Client.Blazor.Services
             return result;
         }
 
-        // PostJsonAsync throws an error when reading string result - this is why I switched to PostAsync
         public async Task<string> Login(LoginModel loginModel)
         {
             var tokenTask = await _httpClient.PostAsJsonAsync("api/account/login", new GetTokenQuery { Username = loginModel.Email, Password = loginModel.Password });

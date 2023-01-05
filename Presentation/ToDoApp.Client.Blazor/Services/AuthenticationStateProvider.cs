@@ -1,20 +1,15 @@
-﻿namespace ToDoApp.Client.Blazor
+﻿using System.Net;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+
+namespace ToDoApp.Client.Blazor.Services
 {
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Net.Http.Json;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
-
-    using Blazored.LocalStorage;
-
-    using Microsoft.AspNetCore.Components.Authorization;
-
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
-
 
         public CustomAuthenticationStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
         {
@@ -31,8 +26,16 @@
             }
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", savedToken);
-            var username = await _httpClient.GetFromJsonAsync<string>("api/account/currentuser");
-            var identity = !string.IsNullOrEmpty(username) ? new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) }, "apiauth") : new ClaimsIdentity();
+            var result = await _httpClient.GetAsync("api/account/me/name");
+
+            if (result.StatusCode != HttpStatusCode.OK)
+            {
+                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            }
+
+            var user = await result.Content.ReadAsStringAsync();
+
+            var identity = !string.IsNullOrEmpty(user) ? new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user) }, "apiauth") : new ClaimsIdentity();
 
             return new AuthenticationState(new ClaimsPrincipal(identity));
         }
