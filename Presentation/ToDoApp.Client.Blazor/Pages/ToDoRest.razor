@@ -1,10 +1,5 @@
 ﻿@page "/todorest"
-@inject HttpClient Http
-@using Microsoft.AspNetCore.Components.Authorization
-@using ToDoApp.Domain.Entities
 @using ToDoApp.Domain.Enums
-@inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h1>To Do REST</h1>
 
@@ -49,63 +44,4 @@ else
         <input class="form-control col-mb-4" placeholder="Add new item" @bind="@newItem" />
         <button class="btn btn-primary col-mb-2" @onclick="@AddTodo">Create</button>
     </div>
-}
-
-@code {
-    List<ToDoItem> toDoList;
-    private string newItem;
-    private string currentUser;
-
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await authenticationStateTask;
-        var user = authState.User;
-
-        if (user.Identity.IsAuthenticated)
-        {
-            currentUser = user.Identity.Name;
-            toDoList = await Http.GetFromJsonAsync<List<ToDoItem>>("api/todo");
-        }
-        else
-        {
-            NavigationManager.NavigateTo("login/");
-        }
-    }
-
-    private async Task AddTodo()
-    {
-        if (!string.IsNullOrWhiteSpace(newItem))
-        {
-            var todo = new ToDoItem(newItem, currentUser);
-            toDoList.Add(todo);
-            await Http.PostAsJsonAsync("api/todo", new { description = newItem, id = todo.Id });
-            newItem = string.Empty;
-        }
-    }
-
-    private void RemoveTodo(Guid guid)
-    {
-        toDoList.Remove(toDoList.First(x => x.Id.Equals(guid)));
-        Http.DeleteAsync($"api/todo/{guid}");
-    }
-
-    private async Task StartTodo(Guid guid)
-    {
-        await UpdateTodo(guid, Status.InProgress);
-    }
-
-    private async Task CompleteTodo(Guid guid)
-    {
-        await UpdateTodo(guid, Status.Completed);
-    }
-
-    private async Task UpdateTodo(Guid guid, Status status)
-    {
-        var todo = toDoList.First(x => x.Id.Equals(guid));
-        todo.SetStatus(status);
-        await Http.PutAsJsonAsync("api/todo", new { id = guid, description = todo.Description, status = todo.Status });
-    }
 }

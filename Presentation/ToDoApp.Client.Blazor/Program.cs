@@ -3,14 +3,11 @@ using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using ToDoApp.Client.Blazor.Services;
 
 namespace ToDoApp.Client.Blazor
 {
-    using System;
-
-    using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
     public class Program
     {
         public static async Task Main(string[] args)
@@ -25,8 +22,8 @@ namespace ToDoApp.Client.Blazor
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5002") });
-            builder.Services.AddSingleton(services =>
+            builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri("https://localhost:5002") });
+            builder.Services.AddSingleton(_ =>
             {
                 var httpHandler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
 

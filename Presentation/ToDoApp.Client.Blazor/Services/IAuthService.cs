@@ -1,5 +1,4 @@
-﻿
-using ToDoApp.Client.Blazor.ViewModels;
+﻿using ToDoApp.Client.Blazor.ViewModels;
 
 namespace ToDoApp.Client.Blazor.Services
 {
