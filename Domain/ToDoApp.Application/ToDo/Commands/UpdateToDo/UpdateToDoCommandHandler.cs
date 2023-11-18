@@ -21,7 +21,7 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle(UpdateToDoCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateToDoCommand request, CancellationToken cancellationToken)
         {
             var toDo = await _queryRepository.GetToDo(request.Id, request.Username);
             toDo.SetDescription(request.Description);
@@ -29,8 +29,6 @@ namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
 
             await _commandRepository.UpdateToDo(toDo);
             await _mediator.Publish(new TaskUpdatedEvent(toDo.Username, toDo.Description, toDo.Status), cancellationToken);
-
-            return Unit.Value;
         }
     }
 }

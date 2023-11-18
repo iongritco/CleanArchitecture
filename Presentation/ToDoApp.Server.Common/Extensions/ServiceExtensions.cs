@@ -22,7 +22,7 @@ namespace ToDoApp.Server.Common.Extensions
     {
         public static void AddMediatR(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(GetToDoListQuery).GetTypeInfo().Assembly);
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(GetToDoListQuery).GetTypeInfo().Assembly));
             services.AddValidatorsFromAssembly(typeof(GetToDoListQuery).GetTypeInfo().Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationHandler<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceHandler<,>));

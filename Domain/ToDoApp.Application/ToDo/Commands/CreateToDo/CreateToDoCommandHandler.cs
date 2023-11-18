@@ -15,12 +15,10 @@ namespace ToDoApp.Application.ToDo.Commands.CreateToDo
             _commandRepository = commandRepository;
         }
 
-        public async Task<Unit> Handle(CreateToDoCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateToDoCommand request, CancellationToken cancellationToken)
         {
             var toDo = new ToDoItem(request.Id, request.Description, request.Username);
             await _commandRepository.CreateToDo(toDo);
-
-            return Unit.Value;
         }
     }
 }

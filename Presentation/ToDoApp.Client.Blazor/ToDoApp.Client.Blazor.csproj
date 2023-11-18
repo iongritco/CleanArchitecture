@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
   </PropertyGroup>
@@ -11,19 +11,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
-    <PackageReference Include="Google.Protobuf" Version="3.21.9" />
-    <PackageReference Include="Grpc.Core" Version="2.46.5" />
-    <PackageReference Include="Grpc.Net.Client" Version="2.49.0" />
-    <PackageReference Include="Grpc.Net.Client.Web" Version="2.49.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.50.0">
+    <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.25.1" />
+    <PackageReference Include="Grpc.Core" Version="2.46.6" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.59.0" />
+    <PackageReference Include="Grpc.Net.Client.Web" Version="2.59.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.59.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="7.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
