@@ -25,5 +25,5 @@ public class UpdateToDoCommand : IRequest
 
     public Status Status { get; set; }
 
-    public string Username { get; set; }
+    public string? Username { get; set; } = string.Empty;
 }
