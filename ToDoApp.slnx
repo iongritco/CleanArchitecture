@@ -21,7 +21,7 @@
     <Project Path="src/Presentation/ToDoApp.Server.GRPC/ToDoApp.Server.GRPC.csproj" />
     <Project Path="src/Presentation/ToDoApp.Server.REST/ToDoApp.Server.REST.csproj" />
   </Folder>
-  <Folder Name="/testssss/">
-    <Project Path="testssss/ToDoApp.UnitTest/ToDoApp.UnitTests.csproj" />
+  <Folder Name="/tests/">
+    <Project Path="tests/ToDoApp.UnitTest/ToDoApp.UnitTests.csproj" />
   </Folder>
 </Solution>
