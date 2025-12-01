@@ -1,0 +1,27 @@
+<Solution>
+  <Folder Name="/meta/">
+    <File Path=".editorconfig" />
+    <File Path=".github/workflows/dotnet.yml" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Domain/">
+    <Project Path="src/Domain/ToDoApp.Application/ToDoApp.Application.csproj" />
+    <Project Path="src/Domain/ToDoApp.Domain/ToDoApp.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="src/Infrastructure/ToDoApp.Identity/ToDoApp.Identity.csproj" />
+    <Project Path="src/Infrastructure/ToDoApp.Persistence/ToDoApp.Persistence.csproj" />
+  </Folder>
+  <Folder Name="/src/Presentation/">
+    <Project Path="src/Presentation/ToDoApp.Client.Blazor/ToDoApp.Client.Blazor.csproj" />
+    <Project Path="src/Presentation/ToDoApp.Server.Common/ToDoApp.Server.Common.csproj" />
+    <Project Path="src/Presentation/ToDoApp.Server.GRPC/ToDoApp.Server.GRPC.csproj" />
+    <Project Path="src/Presentation/ToDoApp.Server.REST/ToDoApp.Server.REST.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ToDoApp.UnitTest/ToDoApp.UnitTests.csproj" />
+  </Folder>
+</Solution>

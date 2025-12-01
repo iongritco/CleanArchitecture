@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation.AspNetCore" />
+		<PackageReference Include="MediatR" />
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Domain\ToDoApp.Application\ToDoApp.Application.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\ToDoApp.Identity\ToDoApp.Identity.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\ToDoApp.Persistence\ToDoApp.Persistence.csproj" />
+	</ItemGroup>
+</Project>
