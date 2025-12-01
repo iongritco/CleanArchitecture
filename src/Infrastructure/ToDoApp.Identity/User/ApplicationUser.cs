@@ -1,9 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 
-namespace ToDoApp.Identity.User
+namespace ToDoApp.Identity.User;
+
+public class ApplicationUser : IdentityUser<Guid>
 {
-    public class ApplicationUser : IdentityUser<Guid>
-    {
-    }
 }

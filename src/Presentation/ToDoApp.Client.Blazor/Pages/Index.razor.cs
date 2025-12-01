@@ -1,25 +1,24 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
 
-namespace ToDoApp.Client.Blazor.Pages
+namespace ToDoApp.Client.Blazor.Pages;
+
+public partial class Index
 {
-    public partial class Index
+    [CascadingParameter]
+    private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    [Inject]
+    public NavigationManager? NavigationManager { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        [CascadingParameter]
-        private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
 
-        [Inject]
-        public NavigationManager? NavigationManager { get; set; }
-
-        protected override async Task OnInitializedAsync()
+        if (user.Identity is not { IsAuthenticated: true })
         {
-            var authState = await AuthenticationStateTask;
-            var user = authState.User;
-
-            if (user.Identity is not { IsAuthenticated: true })
-            {
-                NavigationManager.NavigateTo("/login");
-            }
+            NavigationManager.NavigateTo("/login");
         }
     }
 }

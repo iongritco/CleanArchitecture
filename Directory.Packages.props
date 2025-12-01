@@ -1,52 +1,42 @@
 <Project>
-    <PropertyGroup>
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    </PropertyGroup>
-    <ItemGroup>
-		<PackageVersion Include="FluentValidation" Version="11.11.0" />
-		<PackageVersion Include="MediatR" Version="12.4.1" />
-		<PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
-		<PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
-		<PackageVersion Include="Google.Protobuf" Version="3.29.0" />
-		<PackageVersion Include="Grpc.Core" Version="2.46.6" />
-		<PackageVersion Include="Grpc.Net.Client" Version="2.67.0" />
-		<PackageVersion Include="Grpc.Net.Client.Web" Version="2.67.0" />
-		<PackageVersion Include="Grpc.Tools" Version="2.67.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
-		<PackageVersion Include="System.Net.Http.Json" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.0" />
-		<PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
-		<PackageVersion Include="MediatR" Version="12.4.1" />
-		<PackageVersion Include="Swashbuckle.AspNetCore" Version="7.1.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
-		<PackageVersion Include="Grpc.AspNetCore" Version="2.67.0" />
-		<PackageVersion Include="Grpc.AspNetCore.Web" Version="2.67.0" />
-		<PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-		<PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
-		<PackageVersion Include="MediatR" Version="12.4.1" />
-		<PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-		<PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
-		<PackageVersion Include="Swashbuckle.AspNetCore" Version="7.1.0" />
-		<PackageVersion Include="AutoFixture.AutoMoq" Version="4.18.1" />
-		<PackageVersion Include="AutoFixture.Xunit2" Version="4.18.1" />
-		<PackageVersion Include="FluentAssertions" Version="7.0.0" />
-		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-		<PackageVersion Include="Moq" Version="4.20.72" />
-		<PackageVersion Include="xunit" Version="2.9.2" />
-		<PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2"/>
-		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
-		<PackageVersion Include="System.Net.Http.Json" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
-		<PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
-    </ItemGroup>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="AutoFixture.AutoMoq" Version="4.18.1" />
+    <PackageVersion Include="AutoFixture.Xunit2" Version="4.18.1" />
+    <PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
+    <PackageVersion Include="FluentAssertions" Version="8.8.0" />
+    <PackageVersion Include="FluentValidation" Version="12.1.0" />
+    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.1" />
+    <PackageVersion Include="Google.Protobuf" Version="3.33.1" />
+    <PackageVersion Include="Grpc.AspNetCore" Version="2.71.0" />
+    <PackageVersion Include="Grpc.AspNetCore.Web" Version="2.71.0" />
+    <PackageVersion Include="Grpc.Core" Version="2.46.6" />
+    <PackageVersion Include="Grpc.Net.Client" Version="2.71.0" />
+    <PackageVersion Include="Grpc.Net.Client.Web" Version="2.71.0" />
+    <PackageVersion Include="Grpc.Tools" Version="2.76.0" />
+    <PackageVersion Include="MediatR" Version="13.1.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.0" PrivateAssets="all" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.0.1" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
+    <PackageVersion Include="System.Net.Http.Json" Version="10.0.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+  </ItemGroup>
 </Project>

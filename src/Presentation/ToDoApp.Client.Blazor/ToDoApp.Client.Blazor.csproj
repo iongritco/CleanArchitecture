@@ -12,7 +12,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" />
-    <PackageReference Include="System.Net.Http.Json" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" />
   </ItemGroup>
 

@@ -1,7 +1,6 @@
-﻿namespace ToDoApp.Application.Interfaces
+﻿namespace ToDoApp.Application.Interfaces;
+
+public interface ITokenService
 {
-    public interface ITokenService
-    {
-        string GenerateToken(string username);
-    }
+    string GenerateToken(string username);
 }

@@ -1,11 +1,10 @@
-﻿namespace ToDoApp.Domain.Enums
+﻿namespace ToDoApp.Domain.Enums;
+
+public enum Status
 {
-    public enum Status
-    {
-        None = 0,
-        ToDo = 1,
-        InProgress = 2,
-        Completed = 3,
-        Deleted = 4
-    }
+    None = 0,
+    ToDo = 1,
+    InProgress = 2,
+    Completed = 3,
+    Deleted = 4
 }

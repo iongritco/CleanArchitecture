@@ -11,30 +11,29 @@ using ToDoApp.Domain.Entities;
 
 using Xunit;
 
-namespace ToDoApp.UnitTests.Application.ToDo
+namespace ToDoApp.UnitTests.Application.ToDo;
+
+public class UpdateToDoCommandHandlerShould
 {
-    public class UpdateToDoCommandHandlerShould
+    [Theory]
+    [AutoMoqData]
+    public async Task UpdateStatusToDeletedAndPublishUpdateEvent(
+        ToDoItem toDoItem,
+        UpdateToDoCommand command,
+        [Frozen] Mock<IToDoQueryRepository> queryRepositoryMock,
+        [Frozen] Mock<IToDoCommandRepository> commandRepositoryMock,
+        [Frozen] Mock<IMediator> mediator,
+        UpdateToDoCommandHandler sut)
     {
-        [Theory]
-        [AutoMoqData]
-        public async Task UpdateStatusToDeletedAndPublishUpdateEvent(
-            ToDoItem toDoItem,
-            UpdateToDoCommand command,
-            [Frozen] Mock<IToDoQueryRepository> queryRepositoryMock,
-            [Frozen] Mock<IToDoCommandRepository> commandRepositoryMock,
-            [Frozen] Mock<IMediator> mediator,
-            UpdateToDoCommandHandler sut)
-        {
-            queryRepositoryMock.Setup(call => call.GetToDo(It.IsAny<Guid>(), It.IsAny<string>()))
-                .ReturnsAsync(toDoItem);
+        queryRepositoryMock.Setup(call => call.GetToDo(It.IsAny<Guid>(), It.IsAny<string>()))
+            .ReturnsAsync(toDoItem);
 
-            await sut.Handle(command, CancellationToken.None);
+        await sut.Handle(command, CancellationToken.None);
 
-            commandRepositoryMock.Verify(
-                call => call.UpdateToDo(It.Is<ToDoItem>(x =>
-                    x.Status == command.Status && x.Description == command.Description)),
-                Times.Once);
-            mediator.Verify(call => call.Publish(It.IsAny<TaskUpdatedEvent>(), CancellationToken.None), Times.Once);
-        }
+        commandRepositoryMock.Verify(
+            call => call.UpdateToDo(It.Is<ToDoItem>(x =>
+                x.Status == command.Status && x.Description == command.Description)),
+            Times.Once);
+        mediator.Verify(call => call.Publish(It.IsAny<TaskUpdatedEvent>(), CancellationToken.None), Times.Once);
     }
 }

@@ -4,25 +4,24 @@ using MediatR;
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Domain.Enums;
 
-namespace ToDoApp.Application.ToDo.Commands.DeleteToDo
+namespace ToDoApp.Application.ToDo.Commands.DeleteToDo;
+
+public class DeleteToDoCommandHandler : IRequestHandler<DeleteToDoCommand>
 {
-    public class DeleteToDoCommandHandler : IRequestHandler<DeleteToDoCommand>
+    private readonly IToDoCommandRepository _commandRepository;
+    private readonly IToDoQueryRepository _queryRepository;
+
+    public DeleteToDoCommandHandler(IToDoCommandRepository commandRepository, IToDoQueryRepository queryRepository)
     {
-        private readonly IToDoCommandRepository _commandRepository;
-        private readonly IToDoQueryRepository _queryRepository;
+        _commandRepository = commandRepository;
+        _queryRepository = queryRepository;
+    }
 
-        public DeleteToDoCommandHandler(IToDoCommandRepository commandRepository, IToDoQueryRepository queryRepository)
-        {
-            _commandRepository = commandRepository;
-            _queryRepository = queryRepository;
-        }
+    public async Task Handle(DeleteToDoCommand request, CancellationToken cancellationToken)
+    {
+        var toDo = await _queryRepository.GetToDo(request.Id, request.Username);
+        toDo.SetStatus(Status.Deleted);
 
-        public async Task Handle(DeleteToDoCommand request, CancellationToken cancellationToken)
-        {
-            var toDo = await _queryRepository.GetToDo(request.Id, request.Username);
-            toDo.SetStatus(Status.Deleted);
-
-            await _commandRepository.UpdateToDo(toDo);
-        }
+        await _commandRepository.UpdateToDo(toDo);
     }
 }

@@ -7,59 +7,58 @@ using ToDoApp.Application.ToDo.Commands.DeleteToDo;
 using ToDoApp.Application.ToDo.Commands.UpdateToDo;
 using Microsoft.AspNetCore.Authorization;
 
-namespace ToDoApp.Server.GRPC.Services
+namespace ToDoApp.Server.GRPC.Services;
+
+
+[Authorize]
+public class ToDoService : ToDo.ToDoBase
 {
+    private readonly IMediator _mediator;
 
-    [Authorize]
-    public class ToDoService : ToDo.ToDoBase
+    public ToDoService(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public ToDoService(IMediator mediator)
+    public override async Task<GetToDoListReply> GetToDoList(GetToDoListRequest request, ServerCallContext context)
+    {
+        var result = await _mediator.Send(new GetToDoListQuery(request.Username));
+        var response = new GetToDoListReply();
+        foreach (var item in result)
         {
-            _mediator = mediator;
+            response.ToDoList.Add(
+                new GetToDoListReply.Types.ToDoView
+                    {
+                        CreatedDate = Timestamp.FromDateTime(item.CreatedDate.ToUniversalTime()),
+                        Description = item.Description,
+                        Status = (int)item.Status,
+                        Id = item.Id.ToString()
+                    });
         }
 
-        public override async Task<GetToDoListReply> GetToDoList(GetToDoListRequest request, ServerCallContext context)
-        {
-            var result = await _mediator.Send(new GetToDoListQuery(request.Username));
-            var response = new GetToDoListReply();
-            foreach (var item in result)
-            {
-                response.ToDoList.Add(
-                    new GetToDoListReply.Types.ToDoView
-                        {
-                            CreatedDate = Timestamp.FromDateTime(item.CreatedDate.ToUniversalTime()),
-                            Description = item.Description,
-                            Status = (int)item.Status,
-                            Id = item.Id.ToString()
-                        });
-            }
+        return response;
+    }
 
-            return response;
-        }
+    public override async Task<Empty> AddToDo(AddToDoRequest request, ServerCallContext context)
+    {
+        var command = new CreateToDoCommand(request.Id, request.Description,request.Username);
+        await _mediator.Send(command);
 
-        public override async Task<Empty> AddToDo(AddToDoRequest request, ServerCallContext context)
-        {
-            var command = new CreateToDoCommand(request.Id, request.Description,request.Username);
-            await _mediator.Send(command);
+        return new Empty();
+    }
 
-            return new Empty();
-        }
+    public override async Task<Empty> UpdateToDo(UpdateToDoRequest request, ServerCallContext context)
+    {
+        var command = new UpdateToDoCommand(request.Id, request.Description, request.Status, request.Username);
+        await _mediator.Send(command);
+        return new Empty();
+    }
 
-        public override async Task<Empty> UpdateToDo(UpdateToDoRequest request, ServerCallContext context)
-        {
-            var command = new UpdateToDoCommand(request.Id, request.Description, request.Status, request.Username);
-            await _mediator.Send(command);
-            return new Empty();
-        }
+    public override async Task<Empty> DeleteToDo(DeleteToDoRequest request, ServerCallContext context)
+    {
+        var command = new DeleteToDoCommand(request.Id, request.Username);
+        await _mediator.Send(command);
 
-        public override async Task<Empty> DeleteToDo(DeleteToDoRequest request, ServerCallContext context)
-        {
-            var command = new DeleteToDoCommand(request.Id, request.Username);
-            await _mediator.Send(command);
-
-            return new Empty();
-        }
+        return new Empty();
     }
 }

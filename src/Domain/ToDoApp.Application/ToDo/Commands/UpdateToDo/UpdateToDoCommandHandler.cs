@@ -3,32 +3,31 @@
 using ToDoApp.Application.Interfaces;
 using ToDoApp.Application.ToDo.Events;
 
-namespace ToDoApp.Application.ToDo.Commands.UpdateToDo
+namespace ToDoApp.Application.ToDo.Commands.UpdateToDo;
+
+public class UpdateToDoCommandHandler : IRequestHandler<UpdateToDoCommand>
 {
-    public class UpdateToDoCommandHandler : IRequestHandler<UpdateToDoCommand>
+    private readonly IToDoCommandRepository _commandRepository;
+    private readonly IToDoQueryRepository _queryRepository;
+    private readonly IMediator _mediator;
+
+    public UpdateToDoCommandHandler(
+        IToDoCommandRepository commandRepository,
+        IToDoQueryRepository queryRepository,
+        IMediator mediator)
     {
-        private readonly IToDoCommandRepository _commandRepository;
-        private readonly IToDoQueryRepository _queryRepository;
-        private readonly IMediator _mediator;
+        _commandRepository = commandRepository;
+        _queryRepository = queryRepository;
+        _mediator = mediator;
+    }
 
-        public UpdateToDoCommandHandler(
-            IToDoCommandRepository commandRepository,
-            IToDoQueryRepository queryRepository,
-            IMediator mediator)
-        {
-            _commandRepository = commandRepository;
-            _queryRepository = queryRepository;
-            _mediator = mediator;
-        }
+    public async Task Handle(UpdateToDoCommand request, CancellationToken cancellationToken)
+    {
+        var toDo = await _queryRepository.GetToDo(request.Id, request.Username);
+        toDo.SetDescription(request.Description);
+        toDo.SetStatus(request.Status);
 
-        public async Task Handle(UpdateToDoCommand request, CancellationToken cancellationToken)
-        {
-            var toDo = await _queryRepository.GetToDo(request.Id, request.Username);
-            toDo.SetDescription(request.Description);
-            toDo.SetStatus(request.Status);
-
-            await _commandRepository.UpdateToDo(toDo);
-            await _mediator.Publish(new TaskUpdatedEvent(toDo.Username, toDo.Description, toDo.Status), cancellationToken);
-        }
+        await _commandRepository.UpdateToDo(toDo);
+        await _mediator.Publish(new TaskUpdatedEvent(toDo.Username, toDo.Description, toDo.Status), cancellationToken);
     }
 }

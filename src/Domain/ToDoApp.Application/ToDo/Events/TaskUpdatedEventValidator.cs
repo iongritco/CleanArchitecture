@@ -1,15 +1,14 @@
 ﻿using FluentValidation;
 using ToDoApp.Domain.Enums;
 
-namespace ToDoApp.Application.ToDo.Events
+namespace ToDoApp.Application.ToDo.Events;
+
+public class TaskUpdatedEventValidator : AbstractValidator<TaskUpdatedEvent>
 {
-    public class TaskUpdatedEventValidator : AbstractValidator<TaskUpdatedEvent>
+    public TaskUpdatedEventValidator()
     {
-        public TaskUpdatedEventValidator()
-        {
-            RuleFor(x => x.Description).NotEmpty();
-            RuleFor(x => x.Email).NotEmpty();
-            RuleFor(x => x.Status).NotEqual(Status.None);
-        }
+        RuleFor(x => x.Description).NotEmpty();
+        RuleFor(x => x.Email).NotEmpty();
+        RuleFor(x => x.Status).NotEqual(Status.None);
     }
 }

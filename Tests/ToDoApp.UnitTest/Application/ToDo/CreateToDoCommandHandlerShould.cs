@@ -8,22 +8,21 @@ using ToDoApp.Domain.Entities;
 
 using Xunit;
 
-namespace ToDoApp.UnitTests.Application.ToDo
-{
-    public class CreateToDoCommandHandlerShould
-    {
-        [Theory]
-        [AutoMoqData]
-        public async Task ReturnUnitValueWhenSuccessful(
-            CreateToDoCommand command,
-            [Frozen] Mock<IToDoCommandRepository> todoCommandRepositoryMock,
-            CreateToDoCommandHandler sut)
-        {
-            await sut.Handle(command, CancellationToken.None);
+namespace ToDoApp.UnitTests.Application.ToDo;
 
-            todoCommandRepositoryMock.Verify(call => call.CreateToDo(
-                It.Is<ToDoItem>(x => x.Id.Equals(command.Id) && x.Description.Equals(command.Description) && x.Username.Equals(command.Username))),
-                Times.Once);
-        }
+public class CreateToDoCommandHandlerShould
+{
+    [Theory]
+    [AutoMoqData]
+    public async Task ReturnUnitValueWhenSuccessful(
+        CreateToDoCommand command,
+        [Frozen] Mock<IToDoCommandRepository> todoCommandRepositoryMock,
+        CreateToDoCommandHandler sut)
+    {
+        await sut.Handle(command, CancellationToken.None);
+
+        todoCommandRepositoryMock.Verify(call => call.CreateToDo(
+            It.Is<ToDoItem>(x => x.Id.Equals(command.Id) && x.Description.Equals(command.Description) && x.Username.Equals(command.Username))),
+            Times.Once);
     }
 }

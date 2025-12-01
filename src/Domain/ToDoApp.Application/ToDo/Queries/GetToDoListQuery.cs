@@ -2,15 +2,14 @@
 using MediatR;
 using ToDoApp.Domain.Entities;
 
-namespace ToDoApp.Application.ToDo.Queries
-{
-    public class GetToDoListQuery : IRequest<List<ToDoItem>>
-    {
-        public GetToDoListQuery(string username)
-        {
-            Username = username;
-        }
+namespace ToDoApp.Application.ToDo.Queries;
 
-        public string Username { get; private set; }
+public class GetToDoListQuery : IRequest<List<ToDoItem>>
+{
+    public GetToDoListQuery(string username)
+    {
+        Username = username;
     }
+
+    public string Username { get; private set; }
 }

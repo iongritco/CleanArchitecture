@@ -9,26 +9,25 @@ using ToDoApp.Domain.Enums;
 
 using Xunit;
 
-namespace ToDoApp.UnitTests.Application.ToDo
+namespace ToDoApp.UnitTests.Application.ToDo;
+
+public class DeleteToDoCommandHandlerShould
 {
-    public class DeleteToDoCommandHandlerShould
+    [Theory]
+    [AutoMoqData]
+    public async Task UpdateStatusToDeleted(
+        ToDoItem toDoItem,
+        [Frozen] Mock<IToDoQueryRepository> queryRepositoryMock,
+        [Frozen] Mock<IToDoCommandRepository> commandRepositoryMock,
+        DeleteToDoCommandHandler sut)
     {
-        [Theory]
-        [AutoMoqData]
-        public async Task UpdateStatusToDeleted(
-            ToDoItem toDoItem,
-            [Frozen] Mock<IToDoQueryRepository> queryRepositoryMock,
-            [Frozen] Mock<IToDoCommandRepository> commandRepositoryMock,
-            DeleteToDoCommandHandler sut)
-        {
-            var command = new DeleteToDoCommand(Guid.NewGuid().ToString(), "username");
-            queryRepositoryMock.Setup(call => call.GetToDo(It.IsAny<Guid>(), It.IsAny<string>()))
-                .ReturnsAsync(toDoItem);
+        var command = new DeleteToDoCommand(Guid.NewGuid().ToString(), "username");
+        queryRepositoryMock.Setup(call => call.GetToDo(It.IsAny<Guid>(), It.IsAny<string>()))
+            .ReturnsAsync(toDoItem);
 
-            await sut.Handle(command, CancellationToken.None);
+        await sut.Handle(command, CancellationToken.None);
 
-            commandRepositoryMock.Verify(call => call.UpdateToDo(It.Is<ToDoItem>(x => x.Status == Status.Deleted)),
-                Times.Once);
-        }
+        commandRepositoryMock.Verify(call => call.UpdateToDo(It.Is<ToDoItem>(x => x.Status == Status.Deleted)),
+            Times.Once);
     }
 }

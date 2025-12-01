@@ -6,50 +6,49 @@ using ToDoApp.Application.User.Commands;
 using ToDoApp.Application.User.Queries;
 using ToDoApp.Client.Blazor.ViewModels;
 
-namespace ToDoApp.Client.Blazor.Services
+namespace ToDoApp.Client.Blazor.Services;
+
+public class AuthService : IAuthService
 {
-    public class AuthService : IAuthService
+    private readonly HttpClient _httpClient;
+    private readonly AuthenticationStateProvider _authenticationStateProvider;
+    private readonly ILocalStorageService _localStorage;
+
+    public AuthService(HttpClient httpClient,
+                       AuthenticationStateProvider authenticationStateProvider,
+                       ILocalStorageService localStorage)
     {
-        private readonly HttpClient _httpClient;
-        private readonly AuthenticationStateProvider _authenticationStateProvider;
-        private readonly ILocalStorageService _localStorage;
+        _httpClient = httpClient;
+        _authenticationStateProvider = authenticationStateProvider;
+        _localStorage = localStorage;
+    }
 
-        public AuthService(HttpClient httpClient,
-                           AuthenticationStateProvider authenticationStateProvider,
-                           ILocalStorageService localStorage)
+    public async Task<string> Register(RegisterModel registerModel)
+    {
+        var postTask = await _httpClient.PostAsJsonAsync("api/account/register", new RegisterUserCommand { Email = registerModel.Email, Password = registerModel.Password });
+        var result = await postTask.Content.ReadAsStringAsync();
+        return result;
+    }
+
+    public async Task<string> Login(LoginModel loginModel)
+    {
+        var tokenTask = await _httpClient.PostAsJsonAsync("api/account/login", new GetTokenQuery { Username = loginModel.Email, Password = loginModel.Password });
+        var token = await tokenTask.Content.ReadAsStringAsync();
+        if (string.IsNullOrEmpty(token))
         {
-            _httpClient = httpClient;
-            _authenticationStateProvider = authenticationStateProvider;
-            _localStorage = localStorage;
-        }
-
-        public async Task<string> Register(RegisterModel registerModel)
-        {
-            var postTask = await _httpClient.PostAsJsonAsync("api/account/register", new RegisterUserCommand { Email = registerModel.Email, Password = registerModel.Password });
-            var result = await postTask.Content.ReadAsStringAsync();
-            return result;
-        }
-
-        public async Task<string> Login(LoginModel loginModel)
-        {
-            var tokenTask = await _httpClient.PostAsJsonAsync("api/account/login", new GetTokenQuery { Username = loginModel.Email, Password = loginModel.Password });
-            var token = await tokenTask.Content.ReadAsStringAsync();
-            if (string.IsNullOrEmpty(token))
-            {
-                return token;
-            }
-
-            await _localStorage.SetItemAsync("authToken", token);
-            ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return token;
         }
 
-        public async Task Logout()
-        {
-            await _localStorage.RemoveItemAsync("authToken");
-            ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
-            _httpClient.DefaultRequestHeaders.Authorization = null;
-        }
+        await _localStorage.SetItemAsync("authToken", token);
+        ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        return token;
+    }
+
+    public async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("authToken");
+        ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
+        _httpClient.DefaultRequestHeaders.Authorization = null;
     }
 }
